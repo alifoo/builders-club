@@ -1,13 +1,13 @@
 import './App.css'
 import Footer from './components/Footer'
+import InteractiveBanner from './components/InteractiveBanner/InteractiveBanner'
 import Navbar from './components/Navbar'
-import StaticBanner from './components/StaticBanner'
 
 function App() {
   return (
     <>
       <Navbar />
-      <StaticBanner />
+      <InteractiveBanner />
       <Footer />
     </>
   )
