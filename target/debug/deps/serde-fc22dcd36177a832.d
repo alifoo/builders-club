@@ -1,0 +1,14 @@
+/Users/alifoo/code/deliberate-practice/building-club/building-club/target/debug/deps/serde-fc22dcd36177a832.d: /Users/alifoo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /Users/alifoo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /Users/alifoo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /Users/alifoo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /Users/alifoo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /Users/alifoo/code/deliberate-practice/building-club/building-club/target/debug/build/serde-9e9b704ddaaa1520/out/private.rs
+
+/Users/alifoo/code/deliberate-practice/building-club/building-club/target/debug/deps/libserde-fc22dcd36177a832.rlib: /Users/alifoo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /Users/alifoo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /Users/alifoo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /Users/alifoo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /Users/alifoo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /Users/alifoo/code/deliberate-practice/building-club/building-club/target/debug/build/serde-9e9b704ddaaa1520/out/private.rs
+
+/Users/alifoo/code/deliberate-practice/building-club/building-club/target/debug/deps/libserde-fc22dcd36177a832.rmeta: /Users/alifoo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /Users/alifoo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /Users/alifoo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /Users/alifoo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /Users/alifoo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /Users/alifoo/code/deliberate-practice/building-club/building-club/target/debug/build/serde-9e9b704ddaaa1520/out/private.rs
+
+/Users/alifoo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs:
+/Users/alifoo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs:
+/Users/alifoo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs:
+/Users/alifoo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs:
+/Users/alifoo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs:
+/Users/alifoo/code/deliberate-practice/building-club/building-club/target/debug/build/serde-9e9b704ddaaa1520/out/private.rs:
+
+# env-dep:OUT_DIR=/Users/alifoo/code/deliberate-practice/building-club/building-club/target/debug/build/serde-9e9b704ddaaa1520/out
