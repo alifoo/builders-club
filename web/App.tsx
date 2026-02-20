@@ -1,13 +1,14 @@
 import './App.css'
-import { greet } from '../pkg/building_club'
+import Footer from './components/Footer'
+import Navbar from './components/Navbar'
+import StaticBanner from './components/StaticBanner'
 
 function App() {
   return (
     <>
-      <div className="flex border-2">
-        <h1>Vite + React + WebAssembly</h1>
-        {greet("React CWB")}
-      </div>
+      <Navbar />
+      <StaticBanner />
+      <Footer />
     </>
   )
 }
