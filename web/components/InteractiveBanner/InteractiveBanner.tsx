@@ -1,39 +1,38 @@
 import { useState } from "react"
 import type { BannerElement } from "./types";
 import DraggableElement from "./DraggableElement";
+import Navbar from "../Navbar";
+import clube from "../../assets/clube.jpg";
 
 const InteractiveBanner = () => {
-  const [elements, setElements] = useState<BannerElement[]>([
-    {
-      id: 'text-1',
-      type: 'text',
-      x: 100,
-      y: 200,
-      width: 200,
-      height: 40,
-      content: 'Drag me!'
-    },
-    {
-      id: 'text-2',
-      type: 'text',
-      x: 400,
-      y: 300,
-      width: 250,
-      height: 40,
-      content: 'Me too!'
-    }
-  ])
+  const [positions, setPositions] = useState<Record<string, { x: number, y: number }>>({
+    'main-title': { x: 100, y: 100 },
+    'image-1': { x: 600, y: 100 },
+    'card-1': { x: 500, y: 300 },
+  })
 
   function handleMove(id: string, x: number, y: number) {
-    setElements(prev => prev.map(element => element.id === id ? { ...element, x, y } : element))
+    setPositions(prev => ({
+      ...prev,
+      [id]: { x, y }
+    }))
   }
 
   return (
-    <div className="mx-auto max-w-[90vh] relative h-[600px] w-[1200px] bg-gray-400 overflow-hidden">
-      {elements.map(element => (
-        <DraggableElement key={element.id} element={element} onMove={handleMove} />
-      ))}
-    </div>
+    <div className="relative h-150 bg-gray-100 overflow-hidden">
+      <Navbar />
+      <DraggableElement id="main-title" x={positions['main-title'].x} y={positions['main-title'].y} onMove={handleMove}>
+        <h1 className="text-7xl max-w-md">Bem-vindo ao <b>Building Club!</b></h1>
+      </DraggableElement>
+      <DraggableElement id="image-1" x={positions['image-1'].x} y={positions['image-1'].y} onMove={handleMove} >
+        <img src={clube} alt="Clube" className="size-3/12 rounded-md shadow-md" />
+      </DraggableElement >
+      <DraggableElement id="card-1" x={positions['card-1'].x} y={positions['card-1'].y} onMove={handleMove} >
+        <button className="border-2 border-gray-600 rounded-lg p-4 bg-gray-100">
+          Me arraste!
+        </button>
+      </DraggableElement >
+    </div >
   )
 }
 
