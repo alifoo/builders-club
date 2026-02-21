@@ -1,7 +1,7 @@
-import './App.css'
-import Footer from './components/Footer'
-import InteractiveBanner from './components/InteractiveBanner/InteractiveBanner'
-import Navbar from './components/Navbar'
+import "./App.css";
+import Footer from "./components/Footer";
+import InteractiveBanner from "./components/InteractiveBanner/InteractiveBanner";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
       <InteractiveBanner />
       <Footer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
