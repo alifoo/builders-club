@@ -58,8 +58,8 @@ const DraggableElement = ({
 
   return (
     <div
-      className="absolute cursor-grab"
-      style={{ left: `${x}%`, top: `${y}%`, width: "max-content", ...style }}
+      className="absolute cursor-grab w-max h-max"
+      style={{ left: `${x}%`, top: `${y}%`, ...style }}
       onMouseDown={handleMouseDown}
     >
       {children}

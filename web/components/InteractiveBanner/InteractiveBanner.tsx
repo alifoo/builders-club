@@ -35,7 +35,7 @@ const InteractiveBanner = () => {
         onMove={handleMove}
         containerRef={containerRef}
       >
-        <h1 className="text-3xl md:text-5xl lg:text-7xl max-w-md font-gloock">
+        <h1 className="text-3xl md:text-5xl lg:text-7xl max-w-xs w-fit h-fit font-gloock p-0 m-0">
           Bem-vindo ao <b>Building Club</b>
         </h1>
       </DraggableElement>
@@ -49,7 +49,7 @@ const InteractiveBanner = () => {
         <img
           src={clube}
           alt="Clube"
-          className="size-3/12 rounded-md shadow-md"
+          className="w-48 rounded-md shadow-md"
         />
       </DraggableElement>
       <DraggableElement
@@ -64,7 +64,7 @@ const InteractiveBanner = () => {
           em algo para testar!
         </p>
       </DraggableElement>
-    </div>
+    </div >
   );
 };
 
