@@ -17,6 +17,7 @@ const DraggableElement = ({
   onMove,
   children,
   containerRef,
+  style
 }: Props) => {
   const dragOffset = useRef({ x: 0, y: 0 });
 
@@ -58,7 +59,7 @@ const DraggableElement = ({
   return (
     <div
       className="absolute cursor-grab"
-      style={{ left: `${x}%`, top: `${y}%`, width: "max-content" }}
+      style={{ left: `${x}%`, top: `${y}%`, width: "max-content", ...style }}
       onMouseDown={handleMouseDown}
     >
       {children}

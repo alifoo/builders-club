@@ -18,8 +18,7 @@
 
 @font-face {
   font-family: "Danfo";
-  src: url("./assets/fonts/Danfo-Regular-VariableFont_ELSH.ttf")
-    format("truetype");
+  src: url("./assets/fonts/Danfo-Regular-VariableFont_ELSH.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -55,4 +54,14 @@
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+}
+
+@theme {
+  --font-sedgwick: "Sedgwick", cursive;
+  --font-angkor: "Angkor", sans-serif;
+  --font-gloock: "Gloock", serif;
+  --font-danfo: "Danfo", sans-serif;
+  --font-notable: "Notable", sans-serif;
+  --font-rocksalt: "RockSalt", cursive;
+  --font-asset: "Asset", sans-serif;
 }

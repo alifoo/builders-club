@@ -13,11 +13,6 @@ const InteractiveBanner = () => {
     [defaultElements[2]]: { x: 40, y: 55 },
   });
 
-  const [fonts, setFonts] = useState<Record<string, string>>({
-    [defaultElements[0]]: "'Sedgwick', serif",
-    [defaultElements[1]]: "'Gloock', serif",
-  });
-
   const containerRef = useRef<HTMLDivElement>(null);
 
   function handleMove(id: string, x: number, y: number) {
@@ -40,10 +35,7 @@ const InteractiveBanner = () => {
         onMove={handleMove}
         containerRef={containerRef}
       >
-        <h1
-          className="text-3xl md:text-5xl lg:text-7xl max-w-md"
-          style={{ fontFamily: fonts[defaultElements[0]] }}
-        >
+        <h1 className="text-3xl md:text-5xl lg:text-7xl max-w-md font-gloock">
           Bem-vindo ao <b>Building Club</b>
         </h1>
       </DraggableElement>
