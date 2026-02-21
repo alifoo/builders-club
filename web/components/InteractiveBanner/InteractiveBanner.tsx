@@ -25,7 +25,7 @@ const InteractiveBanner = () => {
   return (
     <div
       ref={containerRef}
-      className="relative h-150 bg-gray-100 overflow-hidden inset-0 bg-white bg-[linear-gradient(to_right,#80808012_2px,transparent_2px),linear-gradient(to_bottom,#80808012_2px,transparent_2px)] bg-size-[24px_24px]"
+      className="relative h-150 bg-gray-100 overflow-hidden inset-0 bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size-[16px_16px]"
     >
       <Navbar />
       <DraggableElement
@@ -35,8 +35,8 @@ const InteractiveBanner = () => {
         onMove={handleMove}
         containerRef={containerRef}
       >
-        <h1 className="text-3xl md:text-5xl lg:text-7xl max-w-xs w-fit h-fit font-gloock p-0 m-0">
-          Bem-vindo ao <b>Building Club</b>
+        <h1 className="text-3xl md:text-5xl lg:text-7xl max-w-sm lg:max-w-md w-fit h-fit font-intertight p-0 m-0">
+          Bem-vindo(a) ao <b>Building Club</b>
         </h1>
       </DraggableElement>
       <DraggableElement
@@ -59,7 +59,7 @@ const InteractiveBanner = () => {
         onMove={handleMove}
         containerRef={containerRef}
       >
-        <p className="max-w-52">
+        <p className="max-w-52 font-intertight">
           Tudo nessa página é arrastável e editável. Clique com o botão direito
           em algo para testar!
         </p>
