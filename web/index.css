@@ -18,7 +18,8 @@
 
 @font-face {
   font-family: "Danfo";
-  src: url("./assets/fonts/Danfo-Regular-VariableFont_ELSH.ttf") format("truetype");
+  src: url("./assets/fonts/Danfo-Regular-VariableFont_ELSH.ttf")
+    format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -80,7 +81,8 @@
 
 @font-face {
   font-family: "InterTight";
-  src: url("./assets/fonts/InterTight-Italic-VariableFont_wght.ttf") format("truetype");
+  src: url("./assets/fonts/InterTight-Italic-VariableFont_wght.ttf")
+    format("truetype");
   font-weight: 100 900;
   font-style: italic;
   font-display: swap;

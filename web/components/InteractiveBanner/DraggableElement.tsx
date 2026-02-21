@@ -7,7 +7,6 @@ interface Props {
   onMove: (id: string, x: number, y: number) => void;
   children: React.ReactNode;
   containerRef: React.RefObject<HTMLDivElement | null>;
-  style?: React.CSSProperties;
 }
 
 const DraggableElement = ({
@@ -17,7 +16,6 @@ const DraggableElement = ({
   onMove,
   children,
   containerRef,
-  style
 }: Props) => {
   const dragOffset = useRef({ x: 0, y: 0 });
   const elementSize = useRef({ width: 0, height: 0 });
@@ -47,13 +45,11 @@ const DraggableElement = ({
     const newPixelLeft = e.clientX - dragOffset.current.x;
     const newPixelTop = e.clientY - dragOffset.current.y;
 
-    // Add back half the element width to account for translateX(-50%)
     const newX =
       ((newPixelLeft - rect.left + elementSize.current.width / 2) /
         rect.width) *
       100;
-    const newY =
-      ((newPixelTop - rect.top) / rect.height) * 100;
+    const newY = ((newPixelTop - rect.top) / rect.height) * 100;
     onMove(id, newX, newY);
   }
 
@@ -65,7 +61,7 @@ const DraggableElement = ({
   return (
     <div
       className="absolute cursor-grab w-max h-max"
-      style={{ left: `${x}%`, top: `${y}%`, transform: 'translateX(-50%)', ...style }}
+      style={{ left: `${x}%`, top: `${y}%`, transform: "translateX(-50%)" }}
       onMouseDown={handleMouseDown}
     >
       {children}
