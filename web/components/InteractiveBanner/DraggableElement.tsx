@@ -1,3 +1,4 @@
+import { motion } from "motion/react";
 import { useRef } from "react";
 
 interface Props {
@@ -7,6 +8,8 @@ interface Props {
   onMove: (id: string, x: number, y: number) => void;
   children: React.ReactNode;
   containerRef: React.RefObject<HTMLDivElement | null>;
+  isSelected?: boolean;
+  onSelect?: (id: string) => void;
 }
 
 const DraggableElement = ({
@@ -16,12 +19,15 @@ const DraggableElement = ({
   onMove,
   children,
   containerRef,
+  isSelected,
+  onSelect,
 }: Props) => {
   const dragOffset = useRef({ x: 0, y: 0 });
   const elementSize = useRef({ width: 0, height: 0 });
 
   function handleMouseDown(e: React.MouseEvent<HTMLDivElement>) {
     e.preventDefault();
+    onSelect?.(id);
 
     const elRect = e.currentTarget.getBoundingClientRect();
     dragOffset.current = {
@@ -59,13 +65,19 @@ const DraggableElement = ({
   }
 
   return (
-    <div
+    <motion.div
       className="absolute cursor-grab w-max h-max"
       style={{ left: `${x}%`, top: `${y}%`, transform: "translateX(-50%)" }}
+      animate={
+        isSelected
+          ? { boxShadow: "0 0 0 2px #3b82f6, 0 0 0 3px rgba(59,130,246,0.2)" }
+          : { boxShadow: "0 0 0 0px #3b82f6, 0 0 0 0px rgba(59,130,246,0.0)" }
+      }
+      transition={{ duration: 0.10, ease: "easeInOut" }}
       onMouseDown={handleMouseDown}
     >
       {children}
-    </div>
+    </motion.div>
   );
 };
 
