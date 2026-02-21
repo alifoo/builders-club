@@ -8,9 +8,9 @@ const InteractiveBanner = () => {
   const [positions, setPositions] = useState<
     Record<string, { x: number; y: number }>
   >({
-    [defaultElements[0]]: { x: 5, y: 15 },
-    [defaultElements[1]]: { x: 50, y: 15 },
-    [defaultElements[2]]: { x: 40, y: 55 },
+    [defaultElements[0]]: { x: 50, y: 10 },
+    [defaultElements[1]]: { x: 50, y: 45 },
+    [defaultElements[2]]: { x: 50, y: 30 },
   });
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -25,7 +25,7 @@ const InteractiveBanner = () => {
   return (
     <div
       ref={containerRef}
-      className="relative h-150 bg-gray-100 overflow-hidden inset-0 bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size-[16px_16px]"
+      className="relative min-h-screen h-300 w-full bg-gray-100 overflow-hidden bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size-[16px_16px]"
     >
       <Navbar />
       <DraggableElement
@@ -35,7 +35,7 @@ const InteractiveBanner = () => {
         onMove={handleMove}
         containerRef={containerRef}
       >
-        <h1 className="text-3xl md:text-5xl lg:text-7xl max-w-sm lg:max-w-md w-fit h-fit font-intertight p-0 m-0">
+        <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-7xl w-64 sm:w-80 md:w-150 lg:w-200 h-fit font-space-mono p-0 m-0 text-center">
           Bem-vindo(a) ao <b>Building Club</b>
         </h1>
       </DraggableElement>
@@ -49,7 +49,7 @@ const InteractiveBanner = () => {
         <img
           src={clube}
           alt="Clube"
-          className="w-48 rounded-md shadow-md"
+          className="w-48 sm:w-64 md:w-96 lg:w-150 rounded-md shadow-md"
         />
       </DraggableElement>
       <DraggableElement
@@ -59,7 +59,7 @@ const InteractiveBanner = () => {
         onMove={handleMove}
         containerRef={containerRef}
       >
-        <p className="max-w-52 font-intertight">
+        <p className="font-space-mono text-sm sm:text-base max-w-xs sm:max-w-sm md:max-w-md text-center">
           Tudo nessa página é arrastável e editável. Clique com o botão direito
           em algo para testar!
         </p>

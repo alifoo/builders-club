@@ -20,21 +20,21 @@ const DraggableElement = ({
   style
 }: Props) => {
   const dragOffset = useRef({ x: 0, y: 0 });
+  const elementSize = useRef({ width: 0, height: 0 });
 
   function handleMouseDown(e: React.MouseEvent<HTMLDivElement>) {
     e.preventDefault();
 
-    const container = containerRef.current;
-    if (!container) return;
-
-    const rect = container.getBoundingClientRect();
-    const elementPixelX = rect.left + (x / 100) * rect.width;
-    const elementPixelY = rect.top + (y / 100) * rect.height;
-
+    const elRect = e.currentTarget.getBoundingClientRect();
     dragOffset.current = {
-      x: e.clientX - elementPixelX,
-      y: e.clientY - elementPixelY,
+      x: e.clientX - elRect.left,
+      y: e.clientY - elRect.top,
     };
+    elementSize.current = {
+      width: elRect.width,
+      height: elRect.height,
+    };
+
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseup", handleMouseUp);
   }
@@ -44,10 +44,16 @@ const DraggableElement = ({
     if (!container) return;
 
     const rect = container.getBoundingClientRect();
+    const newPixelLeft = e.clientX - dragOffset.current.x;
+    const newPixelTop = e.clientY - dragOffset.current.y;
+
+    // Add back half the element width to account for translateX(-50%)
     const newX =
-      ((e.clientX - dragOffset.current.x - rect.left) / rect.width) * 100;
+      ((newPixelLeft - rect.left + elementSize.current.width / 2) /
+        rect.width) *
+      100;
     const newY =
-      ((e.clientY - dragOffset.current.y - rect.top) / rect.height) * 100;
+      ((newPixelTop - rect.top) / rect.height) * 100;
     onMove(id, newX, newY);
   }
 
@@ -59,7 +65,7 @@ const DraggableElement = ({
   return (
     <div
       className="absolute cursor-grab w-max h-max"
-      style={{ left: `${x}%`, top: `${y}%`, ...style }}
+      style={{ left: `${x}%`, top: `${y}%`, transform: 'translateX(-50%)', ...style }}
       onMouseDown={handleMouseDown}
     >
       {children}
