@@ -1,1 +1,57 @@
 @import "tailwindcss";
+
+@font-face {
+    font-family: 'Angkor';
+    src: url('./assets/fonts/Angkor-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Asset';
+    src: url('./assets/fonts/Asset-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Danfo';
+    src: url('./assets/fonts/Danfo-Regular-VariableFont_ELSH.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Gloock';
+    src: url('./assets/fonts/Gloock-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Notable';
+    src: url('./assets/fonts/Notable-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'RockSalt';
+    src: url('./assets/fonts/RockSalt-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Sedgwick';
+    src: url('./assets/fonts/Sedgwick-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
