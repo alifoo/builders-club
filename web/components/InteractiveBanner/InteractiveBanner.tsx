@@ -3,6 +3,7 @@ import DraggableElement from "./DraggableElement";
 import Navbar from "../Navbar";
 import clube from "../../assets/clube.jpg";
 import { defaultElements } from "./defaultElements";
+import Toolbar from "./Toolbar";
 
 const InteractiveBanner = () => {
   const [positions, setPositions] = useState<
@@ -13,7 +14,7 @@ const InteractiveBanner = () => {
     [defaultElements[2]]: { x: 50, y: 30 },
     [defaultElements[3]]: { x: 50, y: 2 },
   });
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selected, setSelected] = useState<{ id: string; width: number } | null>(null);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -24,14 +25,18 @@ const InteractiveBanner = () => {
     }));
   }
 
-  function handleMouseDown(e: React.MouseEvent<HTMLDivElement>) {
-    if (e.target === e.currentTarget) setSelectedId(null);
+  function handleSelect(id: string, width: number) {
+    setSelected({ id, width });
+  }
+
+  function handleMouseDown() {
+    setSelected(null);
   }
 
   return (
     <div
       ref={containerRef}
-      className="relative min-h-screen h-300 w-full bg-gray-100 overflow-hidden bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size-[16px_16px]"
+      className="relative min-h-screen h-300 w-full overflow-hidden bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size-[16px_16px]"
       onMouseDown={handleMouseDown}
     >
       <DraggableElement
@@ -40,8 +45,8 @@ const InteractiveBanner = () => {
         y={positions[defaultElements[0]].y}
         onMove={handleMove}
         containerRef={containerRef}
-        isSelected={selectedId === defaultElements[0]}
-        onSelect={setSelectedId}
+        isSelected={selected?.id === defaultElements[0]}
+        onSelect={handleSelect}
       >
         <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-7xl w-64 sm:w-80 md:w-150 lg:w-200 h-fit font-space-mono p-0 m-0 text-center">
           Bem-vindo(a) ao <b>Building Club</b>
@@ -54,8 +59,8 @@ const InteractiveBanner = () => {
         y={positions[defaultElements[2]].y}
         onMove={handleMove}
         containerRef={containerRef}
-        isSelected={selectedId === defaultElements[2]}
-        onSelect={setSelectedId}
+        isSelected={selected?.id === defaultElements[2]}
+        onSelect={handleSelect}
       >
         <p className="font-space-mono text-sm sm:text-base max-w-xs sm:max-w-sm md:max-w-md text-center">
           Tudo nesta página é arrastável e editável. Clique em algum elemento
@@ -68,8 +73,8 @@ const InteractiveBanner = () => {
         y={positions[defaultElements[1]].y}
         onMove={handleMove}
         containerRef={containerRef}
-        isSelected={selectedId === defaultElements[1]}
-        onSelect={setSelectedId}
+        isSelected={selected?.id === defaultElements[1]}
+        onSelect={handleSelect}
       >
         <img
           src={clube}
@@ -83,11 +88,19 @@ const InteractiveBanner = () => {
         y={positions[defaultElements[3]].y}
         onMove={handleMove}
         containerRef={containerRef}
-        isSelected={selectedId === defaultElements[3]}
-        onSelect={setSelectedId}
+        isSelected={selected?.id === defaultElements[3]}
+        onSelect={handleSelect}
       >
         <Navbar />
       </DraggableElement>
+      {selected && (
+        <Toolbar
+          x={positions[selected.id].x}
+          y={positions[selected.id].y}
+          width={selected.width}
+          onMouseDown={(e: React.MouseEvent) => e.stopPropagation()}
+        />
+      )}
     </div>
   );
 };

@@ -9,7 +9,7 @@ interface Props {
   children: React.ReactNode;
   containerRef: React.RefObject<HTMLDivElement | null>;
   isSelected?: boolean;
-  onSelect?: (id: string) => void;
+  onSelect?: (id: string, width: number) => void;
 }
 
 const DraggableElement = ({
@@ -27,9 +27,11 @@ const DraggableElement = ({
 
   function handleMouseDown(e: React.MouseEvent<HTMLDivElement>) {
     e.preventDefault();
-    onSelect?.(id);
+    e.stopPropagation();
 
     const elRect = e.currentTarget.getBoundingClientRect();
+    onSelect?.(id, elRect.width);
+
     dragOffset.current = {
       x: e.clientX - elRect.left,
       y: e.clientY - elRect.top,

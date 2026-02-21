@@ -6,7 +6,7 @@ const Navbar = () => {
     <motion.div
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      className="flex w-80 sm:w-96 md:w-[600px] lg:w-[700px] gap-2 px-3 sm:px-4 p-2 border-zinc-800 border-1 rounded-sm bg-white items-center mx-auto border-2"
+      className="flex w-80 sm:w-96 md:w-[600px] lg:w-[700px] gap-2 px-3 sm:px-4 p-2 border-gray-200 border-1 rounded-sm bg-white items-center mx-auto border-2"
     >
       <a
         href="#"
