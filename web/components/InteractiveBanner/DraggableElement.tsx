@@ -3,9 +3,10 @@ import { useRef } from "react";
 
 interface Props {
   id: string;
-  x: number;
-  y: number;
-  onMove: (id: string, x: number, y: number) => void;
+  xPercent: number | null;
+  yPx: number | null;
+  initialClassName?: string;
+  onMove: (id: string, xPercent: number, yPx: number) => void;
   children: React.ReactNode;
   containerRef: React.RefObject<HTMLDivElement | null>;
   isSelected?: boolean;
@@ -14,8 +15,9 @@ interface Props {
 
 const DraggableElement = ({
   id,
-  x,
-  y,
+  xPercent,
+  yPx,
+  initialClassName,
   onMove,
   children,
   containerRef,
@@ -24,6 +26,7 @@ const DraggableElement = ({
 }: Props) => {
   const dragOffset = useRef({ x: 0, y: 0 });
   const elementSize = useRef({ width: 0, height: 0 });
+  const isInitialized = xPercent !== null && yPx !== null;
 
   function handleMouseDown(e: React.MouseEvent<HTMLDivElement>) {
     e.preventDefault();
@@ -50,15 +53,19 @@ const DraggableElement = ({
     if (!container) return;
 
     const rect = container.getBoundingClientRect();
-    const newPixelLeft = e.clientX - dragOffset.current.x;
-    const newPixelTop = e.clientY - dragOffset.current.y;
 
-    const newX =
-      ((newPixelLeft - rect.left + elementSize.current.width / 2) /
+    // X as percentage of container width (center point) — stays centered on resize
+    const newXPercent =
+      ((e.clientX -
+        dragOffset.current.x -
+        rect.left +
+        elementSize.current.width / 2) /
         rect.width) *
       100;
-    const newY = ((newPixelTop - rect.top) / rect.height) * 100;
-    onMove(id, newX, newY);
+    // Y as pixels — fixed spacing regardless of container height
+    const newYPx = e.clientY - dragOffset.current.y - rect.top;
+
+    onMove(id, newXPercent, newYPx);
   }
 
   function handleMouseUp() {
@@ -68,14 +75,23 @@ const DraggableElement = ({
 
   return (
     <motion.div
-      className="absolute cursor-grab w-max h-max"
-      style={{ left: `${x}%`, top: `${y}%`, transform: "translateX(-50%)" }}
+      data-draggable-id={id}
+      className={`absolute cursor-grab w-max h-max ${!isInitialized ? initialClassName ?? "" : ""}`}
+      style={
+        isInitialized
+          ? {
+            left: `${xPercent}%`,
+            top: `${yPx}px`,
+            transform: "translateX(-50%)",
+          }
+          : undefined
+      }
       animate={
         isSelected
           ? { boxShadow: "0 0 0 2px #3b82f6, 0 0 0 3px rgba(59,130,246,0.2)" }
           : { boxShadow: "0 0 0 0px #3b82f6, 0 0 0 0px rgba(59,130,246,0.0)" }
       }
-      transition={{ duration: 0.10, ease: "easeInOut" }}
+      transition={{ duration: 0.1, ease: "easeInOut" }}
       onMouseDown={handleMouseDown}
     >
       {children}

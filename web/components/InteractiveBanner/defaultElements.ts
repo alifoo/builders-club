@@ -1,1 +1,1 @@
-export const defaultElements = ["main-title", "text-1", "img-1", "navbar"];
+export const defaultElements = ["main-title", "img-1", "text-1", "navbar"];
