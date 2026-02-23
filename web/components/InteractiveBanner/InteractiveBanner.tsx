@@ -36,7 +36,6 @@ const InteractiveBanner = () => {
   }
 
   function handleSelect(id: string, width: number, type: string) {
-    console.log(type)
     setSelected({ id, width, type });
   }
 
