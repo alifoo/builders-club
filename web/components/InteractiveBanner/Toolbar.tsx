@@ -8,11 +8,12 @@ interface ToolbarProps {
   width: number;
   type: string;
   onMouseDown: (e: React.MouseEvent) => void;
-  onGrayscale: () => void;
+  onGrayscaleWasm: () => void;
+  onGrayscaleJS: () => void;
   onReset: () => void;
 }
 
-const Toolbar = ({ xPercent, yPx, width, type, onMouseDown, onGrayscale, onReset }: ToolbarProps) => {
+const Toolbar = ({ xPercent, yPx, width, type, onMouseDown, onGrayscaleWasm, onGrayscaleJS, onReset }: ToolbarProps) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   return (
     <div
@@ -26,13 +27,14 @@ const Toolbar = ({ xPercent, yPx, width, type, onMouseDown, onGrayscale, onReset
         className="flex flex-col bg-white border-1 border-gray-200 p-1 rounded-xl text-[10px] font-space-mono"
       >
         {type === "IMG" && <>
-          <button className={`${activeIndex === 0 ? "transition delay-150 duration-200 ease-in-out hover:-translate-y-[2px] hover:scale-103 bg-gray-100" : ""} rounded-lg p-2`} onMouseOver={() => setActiveIndex(0)} onClick={onGrayscale}>Grayscale <SiWebassembly className="inline text-indigo-600" /></button>
-          <button className={`${activeIndex === 1 ? "transition delay-150 duration-200 ease-in-out hover:-translate-y-[2px] hover:scale-103 bg-gray-100" : ""} rounded-lg p-2`} onMouseOver={() => setActiveIndex(1)} onClick={onReset}>Color <SiJavascript className="inline text-yellow-400" /></button>
-          <button className={`${activeIndex === 2 ? "transition delay-150 duration-200 ease-in-out hover:-translate-y-[2px] hover:scale-103 bg-gray-100" : ""} rounded-lg p-2`} onMouseOver={() => setActiveIndex(2)}>Sepia <SiWebassembly className="inline text-indigo-600" /></button>
-          <button className={`${activeIndex === 3 ? "transition delay-150 duration-200 ease-in-out hover:-translate-y-[2px] hover:scale-103 bg-gray-100" : ""} rounded-lg p-2`} onMouseOver={() => setActiveIndex(3)}>Sepia <SiJavascript className="inline text-yellow-400" /></button>
+          <button className={`${activeIndex === 0 ? "transition delay-150 duration-200 ease-in-out hover:-translate-y-[2px] hover:scale-103 bg-gray-100" : ""} rounded-lg p-2`} onMouseOver={() => setActiveIndex(0)} onClick={onGrayscaleWasm}>Grayscale <SiWebassembly className="inline text-indigo-600" /></button>
+          <button className={`${activeIndex === 1 ? "transition delay-150 duration-200 ease-in-out hover:-translate-y-[2px] hover:scale-103 bg-gray-100" : ""} rounded-lg p-2`} onMouseOver={() => setActiveIndex(1)} onClick={onGrayscaleJS}>Grayscale <SiJavascript className="inline text-yellow-400" /></button>
+          <button className={`${activeIndex === 2 ? "transition delay-150 duration-200 ease-in-out hover:-translate-y-[2px] hover:scale-103 bg-gray-100" : ""} rounded-lg p-2`} onMouseOver={() => setActiveIndex(2)} onClick={onReset}>Color</button>
+          <button className={`${activeIndex === 3 ? "transition delay-150 duration-200 ease-in-out hover:-translate-y-[2px] hover:scale-103 bg-gray-100" : ""} rounded-lg p-2`} onMouseOver={() => setActiveIndex(3)}>Sepia <SiWebassembly className="inline text-indigo-600" /></button>
+          <button className={`${activeIndex === 4 ? "transition delay-150 duration-200 ease-in-out hover:-translate-y-[2px] hover:scale-103 bg-gray-100" : ""} rounded-lg p-2`} onMouseOver={() => setActiveIndex(4)}>Sepia <SiJavascript className="inline text-yellow-400" /></button>
         </>}
         {type === "TEXT" && <>
-          <button className={`${activeIndex === 0 ? "transition delay-150 duration-200 ease-in-out hover:-translate-y-[2px] hover:scale-103 bg-gray-100" : ""} rounded-lg p-2`} onMouseOver={() => setActiveIndex(0)} onClick={onGrayscale}>Delete</button>
+          <button className={`${activeIndex === 0 ? "transition delay-150 duration-200 ease-in-out hover:-translate-y-[2px] hover:scale-103 bg-gray-100" : ""} rounded-lg p-2`} onMouseOver={() => setActiveIndex(0)}>Delete</button>
         </>}
       </motion.div>
     </div>

@@ -1,11 +1,11 @@
 import { useMemo, useRef, useState } from "react";
 import DraggableElement from "./DraggableElement";
 import Navbar from "../Navbar";
-import clube from "../../assets/clube.jpg";
 import { defaultElements } from "./defaultElements";
 import Toolbar from "./Toolbar";
 import Typewriter from "typewriter-effect";
 import { useImageFilter } from "./useImageFilter";
+import image8k from "../../assets/image8k.jpg";
 
 const CONTAINER_PADDING = 500;
 
@@ -20,7 +20,7 @@ const InteractiveBanner = () => {
   });
   const [selected, setSelected] = useState<{ id: string; width: number, type: string } | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const { currentSrc, applyGrayscale, resetFilter } = useImageFilter(clube);
+  const { currentSrc, applyGrayscaleWasm, applyGrayscaleJS, resetFilter } = useImageFilter(image8k);
 
   const containerMinHeight = useMemo(() => {
     if (!positions) return undefined;
@@ -100,7 +100,7 @@ const InteractiveBanner = () => {
       >
         <img
           src={currentSrc}
-          alt="Clube"
+          alt="8k image"
           className="w-64 sm:w-72 md:w-96 lg:w-150 rounded-md shadow-md"
         />
       </DraggableElement>
@@ -123,7 +123,8 @@ const InteractiveBanner = () => {
           width={selected.width}
           type={selected.type}
           onMouseDown={(e: React.MouseEvent) => e.stopPropagation()}
-          onGrayscale={applyGrayscale}
+          onGrayscaleWasm={applyGrayscaleWasm}
+          onGrayscaleJS={applyGrayscaleJS}
           onReset={resetFilter}
         />
       )}
