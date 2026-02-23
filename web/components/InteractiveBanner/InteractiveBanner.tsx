@@ -5,6 +5,7 @@ import clube from "../../assets/clube.jpg";
 import { defaultElements } from "./defaultElements";
 import Toolbar from "./Toolbar";
 import Typewriter from "typewriter-effect";
+import { useImageFilter } from "./useImageFilter";
 
 const CONTAINER_PADDING = 500;
 
@@ -13,12 +14,13 @@ const InteractiveBanner = () => {
     Record<string, { xPercent: number; yPx: number }>
   >({
     [defaultElements[0]]: { xPercent: 50, yPx: 120 },
-    [defaultElements[1]]: { xPercent: 50, yPx: 340 },
-    [defaultElements[2]]: { xPercent: 50, yPx: 260 },
+    [defaultElements[1]]: { xPercent: 50, yPx: 370 },
+    [defaultElements[2]]: { xPercent: 50, yPx: 270 },
     [defaultElements[3]]: { xPercent: 50, yPx: 24 },
   });
-  const [selected, setSelected] = useState<{ id: string; width: number } | null>(null);
+  const [selected, setSelected] = useState<{ id: string; width: number, type: string } | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const { currentSrc, applyGrayscale, resetFilter } = useImageFilter(clube);
 
   const containerMinHeight = useMemo(() => {
     if (!positions) return undefined;
@@ -33,8 +35,9 @@ const InteractiveBanner = () => {
     }));
   }
 
-  function handleSelect(id: string, width: number) {
-    setSelected({ id, width });
+  function handleSelect(id: string, width: number, type: string) {
+    console.log(type)
+    setSelected({ id, width, type });
   }
 
   function handleMouseDown() {
@@ -56,8 +59,9 @@ const InteractiveBanner = () => {
         containerRef={containerRef}
         isSelected={selected?.id === defaultElements[0]}
         onSelect={handleSelect}
+        type="TEXT"
       >
-        <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl w-64 sm:w-80 md:w-150 lg:w-200 h-fit font-space-mono p-0 m-0 text-center">
+        <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl w-48 sm:w-80 md:w-150 lg:w-200 h-fit font-space-mono p-0 m-0 text-center">
           <Typewriter
             onInit={(typewriter) => {
               typewriter.typeString('Bem-vindo(a) ao <strong>Building Club</strong>').start();
@@ -77,8 +81,9 @@ const InteractiveBanner = () => {
         containerRef={containerRef}
         isSelected={selected?.id === defaultElements[2]}
         onSelect={handleSelect}
+        type="TEXT"
       >
-        <p className="font-space-mono text-sm sm:text-base max-w-xs sm:max-w-sm md:max-w-md text-center">
+        <p className="font-space-mono text-sm sm:text-base w-48 sm:w-64 md:w-96 lg:w-150 h-fit text-center">
           Tudo nesta página é arrastável e editável. Clique em algum elemento
           para testar!
         </p>
@@ -91,9 +96,10 @@ const InteractiveBanner = () => {
         containerRef={containerRef}
         isSelected={selected?.id === defaultElements[1]}
         onSelect={handleSelect}
+        type="IMG"
       >
         <img
-          src={clube}
+          src={currentSrc}
           alt="Clube"
           className="w-64 sm:w-72 md:w-96 lg:w-150 rounded-md shadow-md"
         />
@@ -106,6 +112,7 @@ const InteractiveBanner = () => {
         containerRef={containerRef}
         isSelected={selected?.id === defaultElements[3]}
         onSelect={handleSelect}
+        type="COMPONENT"
       >
         <Navbar />
       </DraggableElement>
@@ -114,7 +121,10 @@ const InteractiveBanner = () => {
           xPercent={positions[selected.id].xPercent}
           yPx={positions[selected.id].yPx}
           width={selected.width}
+          type={selected.type}
           onMouseDown={(e: React.MouseEvent) => e.stopPropagation()}
+          onGrayscale={applyGrayscale}
+          onReset={resetFilter}
         />
       )}
     </div>
