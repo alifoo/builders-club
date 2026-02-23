@@ -53,11 +53,13 @@ function processImage(
     originalSrc: string,
     filterFn: (data: Uint8Array) => Uint8Array | void,
     label: string,
-    onDone: (dataUrl: string) => void
+    onDone: (src: string) => void
 ) {
     const img = new Image();
     img.crossOrigin = "anonymous";
     img.onload = () => {
+        const totalStart = performance.now();
+
         const canvas = document.createElement("canvas");
         canvas.width = img.naturalWidth;
         canvas.height = img.naturalHeight;
@@ -68,11 +70,9 @@ function processImage(
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         const pixels = new Uint8Array(imageData.data.buffer);
 
-        const start = performance.now();
+        const filterStart = performance.now();
         const result = filterFn(pixels);
-        const elapsed = performance.now() - start;
-
-        console.log(`[${label}] ${canvas.width}x${canvas.height} (${pixels.length} bytes) — ${elapsed.toFixed(2)}ms`);
+        const filterElapsed = performance.now() - filterStart;
 
         const outputData = result ?? pixels;
 
@@ -83,7 +83,13 @@ function processImage(
         );
         ctx.putImageData(newImageData, 0, 0);
 
-        onDone(canvas.toDataURL());
+        canvas.toBlob((blob) => {
+            const totalElapsed = performance.now() - totalStart;
+            console.log(
+                `[${label}] ${canvas.width}x${canvas.height} (${pixels.length} bytes) — filter: ${filterElapsed.toFixed(2)}ms, total: ${totalElapsed.toFixed(2)}ms`
+            );
+            onDone(URL.createObjectURL(blob!));
+        }, "image/jpeg", 0.92);
     };
     img.src = originalSrc;
 }
