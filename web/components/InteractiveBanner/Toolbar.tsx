@@ -1,17 +1,17 @@
 import { motion } from "motion/react";
 
 interface ToolbarProps {
-  x: number;
-  y: number;
+  xPercent: number;
+  yPx: number;
   width: number;
   onMouseDown: (e: React.MouseEvent) => void;
 }
 
-const Toolbar = ({ x, y, width, onMouseDown }: ToolbarProps) => {
+const Toolbar = ({ xPercent, yPx, width, onMouseDown }: ToolbarProps) => {
   return (
     <div
       className="absolute bg-white rounded-lg z-50"
-      style={{ left: `${x}%`, top: `${y}%`, transform: `translateX(calc(${width}px / 2 + 15px))` }}
+      style={{ left: `${xPercent}%`, top: `${yPx}px`, transform: `translateX(calc(${width}px / 2 + 15px))` }}
       onMouseDown={onMouseDown}
     >
       <motion.div

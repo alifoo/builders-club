@@ -3,9 +3,9 @@ import { useRef } from "react";
 
 interface Props {
   id: string;
-  x: number;
-  y: number;
-  onMove: (id: string, x: number, y: number) => void;
+  xPercent: number;
+  yPx: number;
+  onMove: (id: string, xPercent: number, yPx: number) => void;
   children: React.ReactNode;
   containerRef: React.RefObject<HTMLDivElement | null>;
   isSelected?: boolean;
@@ -14,8 +14,8 @@ interface Props {
 
 const DraggableElement = ({
   id,
-  x,
-  y,
+  xPercent,
+  yPx,
   onMove,
   children,
   containerRef,
@@ -57,7 +57,7 @@ const DraggableElement = ({
       ((newPixelLeft - rect.left + elementSize.current.width / 2) /
         rect.width) *
       100;
-    const newY = ((newPixelTop - rect.top) / rect.height) * 100;
+    const newY = newPixelTop - rect.top;
     onMove(id, newX, newY);
   }
 
@@ -69,7 +69,7 @@ const DraggableElement = ({
   return (
     <motion.div
       className="absolute cursor-grab w-max h-max"
-      style={{ left: `${x}%`, top: `${y}%`, transform: "translateX(-50%)" }}
+      style={{ left: `${xPercent}%`, top: `${yPx}px`, transform: "translateX(-50%)" }}
       animate={
         isSelected
           ? { boxShadow: "0 0 0 2px #3b82f6, 0 0 0 3px rgba(59,130,246,0.2)" }
