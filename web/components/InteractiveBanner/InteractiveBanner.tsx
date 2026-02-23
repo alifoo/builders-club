@@ -4,6 +4,7 @@ import Navbar from "../Navbar";
 import clube from "../../assets/clube.jpg";
 import { defaultElements } from "./defaultElements";
 import Toolbar from "./Toolbar";
+import Typewriter from "typewriter-effect";
 
 const InteractiveBanner = () => {
   const [positions, setPositions] = useState<
@@ -49,7 +50,14 @@ const InteractiveBanner = () => {
         onSelect={handleSelect}
       >
         <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-7xl w-64 sm:w-80 md:w-150 lg:w-200 h-fit font-space-mono p-0 m-0 text-center">
-          Bem-vindo(a) ao <b>Building Club</b>
+          <Typewriter
+            onInit={(typewriter) => {
+              typewriter.typeString('Bem-vindo(a) ao <strong>Building Club</strong>').start();
+            }}
+            options={{
+              delay: 90,
+            }}
+          />
         </h1>
       </DraggableElement>
 
