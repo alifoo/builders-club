@@ -10,11 +10,28 @@ interface ToolbarProps {
   onMouseDown: (e: React.MouseEvent) => void;
   onGrayscaleWasm: () => void;
   onGrayscaleJS: () => void;
+  onSepiaWasm: () => void;
+  onSepiaJS: () => void;
+  onInvertWasm: () => void;
+  onInvertJS: () => void;
+  onBlurWasm: () => void;
+  onBlurJS: () => void;
   onReset: () => void;
 }
 
-const Toolbar = ({ xPercent, yPx, width, type, onMouseDown, onGrayscaleWasm, onGrayscaleJS, onReset }: ToolbarProps) => {
+const Toolbar = ({ xPercent, yPx, width, type, onMouseDown, onGrayscaleWasm, onGrayscaleJS, onSepiaWasm, onSepiaJS, onInvertWasm, onInvertJS, onBlurWasm, onBlurJS, onReset }: ToolbarProps) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
+
+  const imgButtons = [
+    { label: "Grayscale", onClickWasm: onGrayscaleWasm, onClickJS: onGrayscaleJS },
+    { label: "Sepia", onClickWasm: onSepiaWasm, onClickJS: onSepiaJS },
+    { label: "Invert", onClickWasm: onInvertWasm, onClickJS: onInvertJS },
+    { label: "Blur", onClickWasm: onBlurWasm, onClickJS: onBlurJS },
+  ];
+
+  const hoverClass = "transition delay-150 duration-200 ease-in-out hover:-translate-y-[2px] hover:scale-103 bg-gray-100";
+  let buttonIndex = 0;
+
   return (
     <div
       className="absolute bg-white rounded-lg z-50"
@@ -27,14 +44,20 @@ const Toolbar = ({ xPercent, yPx, width, type, onMouseDown, onGrayscaleWasm, onG
         className="flex flex-col bg-white border-1 border-gray-200 p-1 rounded-xl text-[10px] font-space-mono"
       >
         {type === "IMG" && <>
-          <button className={`${activeIndex === 0 ? "transition delay-150 duration-200 ease-in-out hover:-translate-y-[2px] hover:scale-103 bg-gray-100" : ""} rounded-lg p-2`} onMouseOver={() => setActiveIndex(0)} onClick={onGrayscaleWasm}>Grayscale <SiWebassembly className="inline text-indigo-600" /></button>
-          <button className={`${activeIndex === 1 ? "transition delay-150 duration-200 ease-in-out hover:-translate-y-[2px] hover:scale-103 bg-gray-100" : ""} rounded-lg p-2`} onMouseOver={() => setActiveIndex(1)} onClick={onGrayscaleJS}>Grayscale <SiJavascript className="inline text-yellow-400" /></button>
-          <button className={`${activeIndex === 2 ? "transition delay-150 duration-200 ease-in-out hover:-translate-y-[2px] hover:scale-103 bg-gray-100" : ""} rounded-lg p-2`} onMouseOver={() => setActiveIndex(2)} onClick={onReset}>Color</button>
-          <button className={`${activeIndex === 3 ? "transition delay-150 duration-200 ease-in-out hover:-translate-y-[2px] hover:scale-103 bg-gray-100" : ""} rounded-lg p-2`} onMouseOver={() => setActiveIndex(3)}>Sepia <SiWebassembly className="inline text-indigo-600" /></button>
-          <button className={`${activeIndex === 4 ? "transition delay-150 duration-200 ease-in-out hover:-translate-y-[2px] hover:scale-103 bg-gray-100" : ""} rounded-lg p-2`} onMouseOver={() => setActiveIndex(4)}>Sepia <SiJavascript className="inline text-yellow-400" /></button>
+          {imgButtons.map(({ label, onClickWasm, onClickJS }) => {
+            const wasmIdx = buttonIndex++;
+            const jsIdx = buttonIndex++;
+            return (
+              <div key={label}>
+                <button className={`${activeIndex === wasmIdx ? hoverClass : ""} rounded-lg p-2 text-left block`} onMouseOver={() => setActiveIndex(wasmIdx)} onClick={onClickWasm}>{label} <SiWebassembly className="inline text-indigo-600" /></button>
+                <button className={`${activeIndex === jsIdx ? hoverClass : ""} rounded-lg p-2 text-left block`} onMouseOver={() => setActiveIndex(jsIdx)} onClick={onClickJS}>{label} <SiJavascript className="inline text-yellow-400" /></button>
+              </div>
+            );
+          })}
+          <button className={`${activeIndex === buttonIndex ? hoverClass : ""} rounded-lg p-2 text-left block`} onMouseOver={() => setActiveIndex(buttonIndex)} onClick={onReset}>Restore default</button>
         </>}
         {type === "TEXT" && <>
-          <button className={`${activeIndex === 0 ? "transition delay-150 duration-200 ease-in-out hover:-translate-y-[2px] hover:scale-103 bg-gray-100" : ""} rounded-lg p-2`} onMouseOver={() => setActiveIndex(0)}>Delete</button>
+          <button className={`${activeIndex === 0 ? hoverClass : ""} rounded-lg p-2 text-left block`} onMouseOver={() => setActiveIndex(0)}>Delete</button>
         </>}
       </motion.div>
     </div>
@@ -42,3 +65,4 @@ const Toolbar = ({ xPercent, yPx, width, type, onMouseDown, onGrayscaleWasm, onG
 }
 
 export default Toolbar
+
