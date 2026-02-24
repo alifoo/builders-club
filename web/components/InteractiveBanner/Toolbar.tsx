@@ -16,6 +16,7 @@ interface ToolbarProps {
   onBlurWasm: () => void;
   onBlurJS: () => void;
   onReset: () => void;
+  onDelete?: () => void;
 }
 
 const Toolbar = ({
@@ -33,6 +34,7 @@ const Toolbar = ({
   onBlurWasm,
   onBlurJS,
   onReset,
+  onDelete,
 }: ToolbarProps) => {
   const buttonClass =
     "cursor-pointer rounded-lg p-2 text-left block w-full transition delay-150 duration-200 ease-in-out hover:-translate-y-[2px] hover:scale-[1.03] hover:bg-gray-100";
@@ -106,7 +108,11 @@ const Toolbar = ({
           </>
         )}
 
-        {type === "TEXT" && <button className={buttonClass}>Delete</button>}
+        {type === "IMG" && <hr className="border-gray-100" />}
+
+        <button className={buttonClass} onClick={onDelete}>
+          Delete
+        </button>
       </motion.div>
     </div>
   );

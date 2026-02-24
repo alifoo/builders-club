@@ -26,6 +26,7 @@ const InteractiveBanner = () => {
     type: string;
     contextMenu?: boolean;
   } | null>(null);
+  const [hiddenElements, setHiddenElements] = useState<Set<string>>(new Set());
   const containerRef = useRef<HTMLDivElement>(null);
   const {
     currentSrc,
@@ -64,6 +65,13 @@ const InteractiveBanner = () => {
     setSelected(null);
   }
 
+  function handleDelete() {
+    if (selected) {
+      setHiddenElements((prev) => new Set(prev).add(selected.id));
+      setSelected(null);
+    }
+  }
+
   const handleRightClick = (event: React.MouseEvent) => {
     event.preventDefault();
     const imgEl = event.currentTarget as HTMLElement;
@@ -87,75 +95,83 @@ const InteractiveBanner = () => {
           : undefined
       }
     >
-      <DraggableElement
-        id={defaultElements[0]}
-        xPercent={positions[defaultElements[0]].xPercent}
-        yPx={positions[defaultElements[0]].yPx}
-        onMove={handleMove}
-        containerRef={containerRef}
-        isSelected={selected?.id === defaultElements[0]}
-        onSelect={handleSelect}
-        type="TEXT"
-      >
-        <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl w-48 sm:w-80 md:w-150 lg:w-200 h-fit font-space-mono p-0 m-0 text-center">
-          <Typewriter
-            onInit={(typewriter) => {
-              typewriter
-                .typeString("bem-vindo(a) ao <strong>Building Club</strong>")
-                .start();
-            }}
-            options={{
-              delay: 90,
-            }}
-          />
-        </h1>
-      </DraggableElement>
+      {!hiddenElements.has(defaultElements[0]) && (
+        <DraggableElement
+          id={defaultElements[0]}
+          xPercent={positions[defaultElements[0]].xPercent}
+          yPx={positions[defaultElements[0]].yPx}
+          onMove={handleMove}
+          containerRef={containerRef}
+          isSelected={selected?.id === defaultElements[0]}
+          onSelect={handleSelect}
+          type="TEXT"
+        >
+          <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl w-48 sm:w-80 md:w-150 lg:w-200 h-fit font-space-mono p-0 m-0 text-center">
+            <Typewriter
+              onInit={(typewriter) => {
+                typewriter
+                  .typeString("bem-vindo(a) ao <strong>Building Club</strong>")
+                  .start();
+              }}
+              options={{
+                delay: 90,
+              }}
+            />
+          </h1>
+        </DraggableElement>
+      )}
 
-      <DraggableElement
-        id={defaultElements[2]}
-        xPercent={positions[defaultElements[2]].xPercent}
-        yPx={positions[defaultElements[2]].yPx}
-        onMove={handleMove}
-        containerRef={containerRef}
-        isSelected={selected?.id === defaultElements[2]}
-        onSelect={handleSelect}
-        type="TEXT"
-      >
-        <p className="font-space-mono text-sm sm:text-base w-48 sm:w-64 md:w-96 lg:w-150 h-fit text-center">
-          tudo nesta página é arrastável e editável. clique em algum elemento
-          para testar!
-        </p>
-      </DraggableElement>
-      <DraggableElement
-        id={defaultElements[1]}
-        xPercent={positions[defaultElements[1]].xPercent}
-        yPx={positions[defaultElements[1]].yPx}
-        onMove={handleMove}
-        containerRef={containerRef}
-        isSelected={selected?.id === defaultElements[1]}
-        onSelect={handleSelect}
-        type="IMG"
-      >
-        <img
-          src={currentSrc}
-          alt="8k image"
-          className="w-64 sm:w-72 md:w-96 lg:w-150 rounded-md shadow-md"
-          onContextMenu={handleRightClick}
-        />
-      </DraggableElement>
-      <DraggableElement
-        id={defaultElements[3]}
-        xPercent={positions[defaultElements[3]].xPercent}
-        yPx={positions[defaultElements[3]].yPx}
-        onMove={handleMove}
-        containerRef={containerRef}
-        isSelected={selected?.id === defaultElements[3]}
-        onSelect={handleSelect}
-        type="COMPONENT"
-      >
-        <Navbar />
-      </DraggableElement>
-      {selected && !selected.contextMenu && selected.type !== "COMPONENT" && (
+      {!hiddenElements.has(defaultElements[2]) && (
+        <DraggableElement
+          id={defaultElements[2]}
+          xPercent={positions[defaultElements[2]].xPercent}
+          yPx={positions[defaultElements[2]].yPx}
+          onMove={handleMove}
+          containerRef={containerRef}
+          isSelected={selected?.id === defaultElements[2]}
+          onSelect={handleSelect}
+          type="TEXT"
+        >
+          <p className="font-space-mono text-sm sm:text-base w-48 sm:w-64 md:w-96 lg:w-150 h-fit text-center">
+            tudo nesta página é arrastável e editável. clique em algum elemento
+            para testar!
+          </p>
+        </DraggableElement>
+      )}
+      {!hiddenElements.has(defaultElements[1]) && (
+        <DraggableElement
+          id={defaultElements[1]}
+          xPercent={positions[defaultElements[1]].xPercent}
+          yPx={positions[defaultElements[1]].yPx}
+          onMove={handleMove}
+          containerRef={containerRef}
+          isSelected={selected?.id === defaultElements[1]}
+          onSelect={handleSelect}
+          type="IMG"
+        >
+          <img
+            src={currentSrc}
+            alt="8k image"
+            className="w-64 sm:w-72 md:w-96 lg:w-150 rounded-md shadow-md"
+            onContextMenu={handleRightClick}
+          />
+        </DraggableElement>
+      )}
+      {!hiddenElements.has(defaultElements[3]) && (
+        <DraggableElement
+          id={defaultElements[3]}
+          xPercent={positions[defaultElements[3]].xPercent}
+          yPx={positions[defaultElements[3]].yPx}
+          onMove={handleMove}
+          containerRef={containerRef}
+          isSelected={selected?.id === defaultElements[3]}
+          onSelect={handleSelect}
+          type="COMPONENT"
+        >
+          <Navbar />
+        </DraggableElement>
+      )}
+      {selected && !selected.contextMenu && (
         <Toolbar
           xPercent={positions[selected.id].xPercent}
           yPx={positions[selected.id].yPx}
@@ -171,6 +187,7 @@ const InteractiveBanner = () => {
           onBlurWasm={applyBlurWasm}
           onBlurJS={applyBlurJS}
           onReset={resetFilter}
+          onDelete={handleDelete}
         />
       )}
       {metrics && (
