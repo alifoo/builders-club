@@ -127,7 +127,7 @@ function executeWasmFilter(
   return result;
 }
 
-// Contrato da função anônica que vamos injetar no processImage
+// Contrato da função anônima que vamos injetar no processImage
 type FilterFn = (
   data: Uint8Array,
   width: number,
