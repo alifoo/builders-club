@@ -101,7 +101,7 @@ const InteractiveBanner = () => {
           <Typewriter
             onInit={(typewriter) => {
               typewriter
-                .typeString("Bem-vindo(a) ao <strong>Building Club</strong>")
+                .typeString("bem-vindo(a) ao <strong>Building Club</strong>")
                 .start();
             }}
             options={{
@@ -122,7 +122,7 @@ const InteractiveBanner = () => {
         type="TEXT"
       >
         <p className="font-space-mono text-sm sm:text-base w-48 sm:w-64 md:w-96 lg:w-150 h-fit text-center">
-          Tudo nesta página é arrastável e editável. Clique em algum elemento
+          tudo nesta página é arrastável e editável. clique em algum elemento
           para testar!
         </p>
       </DraggableElement>
