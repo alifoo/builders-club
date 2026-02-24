@@ -13,12 +13,16 @@ const BenchmarkPopup = ({
   totalTime,
   onClose,
 }: BenchmarkPopupProps) => {
+  const wasmColors = "bg-gradient-to-br from-indigo-200 to-indigo-600";
+  const jsColors = "bg-gradient-to-br from-yellow-200 to-yellow-400";
+
+  const colors = label.includes("WASM") ? wasmColors : jsColors;
   return (
     <>
       <motion.div
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="fixed bottom-4 left-4 border-2 border-gray-200 bg-gradient-to-br from-gray-50 to-gray-100 text-gray-900 rounded-lg shadow-lg p-4 z-50 min-w-56 font-space-mono"
+        className={`${colors} fixed bottom-4 left-4 border-2 border-gray-200 text-gray-900 rounded-lg shadow-lg p-4 z-50 min-w-56 font-space-mono`}
       >
         <button
           onClick={onClose}
