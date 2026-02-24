@@ -22,7 +22,7 @@ const DraggableElement = ({
   containerRef,
   isSelected,
   onSelect,
-  type
+  type,
 }: Props) => {
   const dragOffset = useRef({ x: 0, y: 0 });
   const elementSize = useRef({ width: 0, height: 0 });
@@ -71,13 +71,17 @@ const DraggableElement = ({
   return (
     <motion.div
       className="absolute cursor-grab w-max h-max"
-      style={{ left: `${xPercent}%`, top: `${yPx}px`, transform: "translateX(-50%)" }}
+      style={{
+        left: `${xPercent}%`,
+        top: `${yPx}px`,
+        transform: "translateX(-50%)",
+      }}
       animate={
         isSelected
           ? { boxShadow: "0 0 0 2px #3b82f6, 0 0 0 3px rgba(59,130,246,0.2)" }
           : { boxShadow: "0 0 0 0px #3b82f6, 0 0 0 0px rgba(59,130,246,0.0)" }
       }
-      transition={{ duration: 0.10, ease: "easeInOut" }}
+      transition={{ duration: 0.1, ease: "easeInOut" }}
       onMouseDown={handleMouseDown}
     >
       {children}

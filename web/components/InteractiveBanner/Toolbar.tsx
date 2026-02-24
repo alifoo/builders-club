@@ -19,20 +19,32 @@ interface ToolbarProps {
 }
 
 const Toolbar = ({
-  xPercent, yPx, width, type, onMouseDown,
-  onGrayscaleWasm, onGrayscaleJS,
-  onSepiaWasm, onSepiaJS,
-  onInvertWasm, onInvertJS,
-  onBlurWasm, onBlurJS,
-  onReset
+  xPercent,
+  yPx,
+  width,
+  type,
+  onMouseDown,
+  onGrayscaleWasm,
+  onGrayscaleJS,
+  onSepiaWasm,
+  onSepiaJS,
+  onInvertWasm,
+  onInvertJS,
+  onBlurWasm,
+  onBlurJS,
+  onReset,
 }: ToolbarProps) => {
-
-  const buttonClass = "rounded-lg p-2 text-left block w-full transition delay-150 duration-200 ease-in-out hover:-translate-y-[2px] hover:scale-[1.03] hover:bg-gray-100";
+  const buttonClass =
+    "cursor-pointer rounded-lg p-2 text-left block w-full transition delay-150 duration-200 ease-in-out hover:-translate-y-[2px] hover:scale-[1.03] hover:bg-gray-100";
 
   return (
     <div
       className="absolute bg-white rounded-lg z-50 shadow-lg"
-      style={{ left: `${xPercent}%`, top: `${yPx}px`, transform: `translateX(calc(${width}px / 2 + 15px))` }}
+      style={{
+        left: `${xPercent}%`,
+        top: `${yPx}px`,
+        transform: `translateX(calc(${width}px / 2 + 15px))`,
+      }}
       onMouseDown={onMouseDown}
     >
       <motion.div
@@ -44,10 +56,12 @@ const Toolbar = ({
           <>
             <div>
               <button className={buttonClass} onClick={onGrayscaleWasm}>
-                Grayscale <SiWebassembly className="inline text-indigo-600 ml-1" />
+                Grayscale{" "}
+                <SiWebassembly className="inline text-indigo-600 ml-1" />
               </button>
               <button className={buttonClass} onClick={onGrayscaleJS}>
-                Grayscale <SiJavascript className="inline text-yellow-400 ml-1" />
+                Grayscale{" "}
+                <SiJavascript className="inline text-yellow-400 ml-1" />
               </button>
             </div>
 
@@ -92,14 +106,10 @@ const Toolbar = ({
           </>
         )}
 
-        {type === "TEXT" && (
-          <button className={buttonClass}>
-            Delete
-          </button>
-        )}
+        {type === "TEXT" && <button className={buttonClass}>Delete</button>}
       </motion.div>
     </div>
   );
-}
+};
 
 export default Toolbar;

@@ -19,9 +19,26 @@ const InteractiveBanner = () => {
     [defaultElements[2]]: { xPercent: 50, yPx: 270 },
     [defaultElements[3]]: { xPercent: 50, yPx: 24 },
   });
-  const [selected, setSelected] = useState<{ id: string; width: number, type: string } | null>(null);
+  const [selected, setSelected] = useState<{
+    id: string;
+    width: number;
+    type: string;
+  } | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const { currentSrc, metrics, setMetrics, applyGrayscaleWasm, applyGrayscaleJS, applySepiaWasm, applySepiaJS, applyInvertWasm, applyInvertJS, applyBlurWasm, applyBlurJS, resetFilter } = useImageFilter(clube);
+  const {
+    currentSrc,
+    metrics,
+    setMetrics,
+    applyGrayscaleWasm,
+    applyGrayscaleJS,
+    applySepiaWasm,
+    applySepiaJS,
+    applyInvertWasm,
+    applyInvertJS,
+    applyBlurWasm,
+    applyBlurJS,
+    resetFilter,
+  } = useImageFilter(clube);
 
   const containerMinHeight = useMemo(() => {
     if (!positions) return undefined;
@@ -46,7 +63,7 @@ const InteractiveBanner = () => {
 
   const handleRightClick = (event: React.MouseEvent) => {
     event.preventDefault();
-    console.log('Right click detected!');
+    console.log("Right click detected!");
   };
 
   return (
@@ -54,7 +71,11 @@ const InteractiveBanner = () => {
       ref={containerRef}
       className="relative min-h-screen w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size-[16px_16px]"
       onMouseDown={handleMouseDown}
-      style={containerMinHeight ? { minHeight: `${containerMinHeight}px` } : undefined}
+      style={
+        containerMinHeight
+          ? { minHeight: `${containerMinHeight}px` }
+          : undefined
+      }
     >
       <DraggableElement
         id={defaultElements[0]}
@@ -69,7 +90,9 @@ const InteractiveBanner = () => {
         <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl w-48 sm:w-80 md:w-150 lg:w-200 h-fit font-space-mono p-0 m-0 text-center">
           <Typewriter
             onInit={(typewriter) => {
-              typewriter.typeString('Bem-vindo(a) ao <strong>Building Club</strong>').start();
+              typewriter
+                .typeString("Bem-vindo(a) ao <strong>Building Club</strong>")
+                .start();
             }}
             options={{
               delay: 90,

@@ -138,7 +138,10 @@ function processImage(
   originalSrc: string,
   label: string,
   filterFn: FilterFn,
-  onDone: (src: string, metrics: { label: string, filterTime: number, totalTime: number }) => void,
+  onDone: (
+    src: string,
+    metrics: { label: string; filterTime: number; totalTime: number },
+  ) => void,
 ) {
   const img = new Image();
   img.crossOrigin = "anonymous";
@@ -191,7 +194,11 @@ function processImage(
 
 export function useImageFilter(originalSrc: string) {
   const [currentSrc, setCurrentSrc] = useState(originalSrc);
-  const [metrics, setMetrics] = useState<{ label: string, filterTime: number, totalTime: number } | null>(null);
+  const [metrics, setMetrics] = useState<{
+    label: string;
+    filterTime: number;
+    totalTime: number;
+  } | null>(null);
 
   const applyGrayscaleWasm = useCallback(async () => {
     await ensureWasmInit();
@@ -317,4 +324,3 @@ export function useImageFilter(originalSrc: string) {
     resetFilter,
   };
 }
-
