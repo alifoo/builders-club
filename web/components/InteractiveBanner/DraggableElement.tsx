@@ -28,6 +28,7 @@ const DraggableElement = ({
   const elementSize = useRef({ width: 0, height: 0 });
 
   function handleMouseDown(e: React.MouseEvent<HTMLDivElement>) {
+    if (e.button === 2) return;
     e.preventDefault();
     e.stopPropagation();
 

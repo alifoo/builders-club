@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import init, {
   grayscale_raw,
   sepia_raw,
@@ -193,6 +193,7 @@ function processImage(
 }
 
 export function useImageFilter(originalSrc: string) {
+  const [baseSrc, setBaseSrc] = useState(originalSrc);
   const [currentSrc, setCurrentSrc] = useState(originalSrc);
   const [metrics, setMetrics] = useState<{
     label: string;
@@ -200,10 +201,13 @@ export function useImageFilter(originalSrc: string) {
     totalTime: number;
   } | null>(null);
 
+  const baseSrcRef = useRef(baseSrc);
+  baseSrcRef.current = baseSrc;
+
   const applyGrayscaleWasm = useCallback(async () => {
     await ensureWasmInit();
     processImage(
-      originalSrc,
+      baseSrcRef.current,
       "WASM Grayscale",
       (data, w, h) => executeWasmFilter(data, w, h, "grayscale"),
       (newSrc, newMetrics) => {
@@ -211,12 +215,12 @@ export function useImageFilter(originalSrc: string) {
         setMetrics(newMetrics);
       },
     );
-  }, [originalSrc]);
+  }, []);
 
   const applyGrayscaleJS = useCallback(async () => {
     await ensureWasmInit();
     processImage(
-      originalSrc,
+      baseSrcRef.current,
       "JS Grayscale",
       (data) => grayscaleJS(data),
       (newSrc, newMetrics) => {
@@ -224,12 +228,12 @@ export function useImageFilter(originalSrc: string) {
         setMetrics(newMetrics);
       },
     );
-  }, [originalSrc]);
+  }, []);
 
   const applySepiaWasm = useCallback(async () => {
     await ensureWasmInit();
     processImage(
-      originalSrc,
+      baseSrcRef.current,
       "WASM Sepia",
       (data, w, h) => executeWasmFilter(data, w, h, "sepia"),
       (newSrc, newMetrics) => {
@@ -237,12 +241,12 @@ export function useImageFilter(originalSrc: string) {
         setMetrics(newMetrics);
       },
     );
-  }, [originalSrc]);
+  }, []);
 
   const applySepiaJS = useCallback(async () => {
     await ensureWasmInit();
     processImage(
-      originalSrc,
+      baseSrcRef.current,
       "JS Sepia",
       (data) => sepiaJS(data),
       (newSrc, newMetrics) => {
@@ -250,12 +254,12 @@ export function useImageFilter(originalSrc: string) {
         setMetrics(newMetrics);
       },
     );
-  }, [originalSrc]);
+  }, []);
 
   const applyInvertWasm = useCallback(async () => {
     await ensureWasmInit();
     processImage(
-      originalSrc,
+      baseSrcRef.current,
       "WASM Invert",
       (data, w, h) => executeWasmFilter(data, w, h, "invert"),
       (newSrc, newMetrics) => {
@@ -263,12 +267,12 @@ export function useImageFilter(originalSrc: string) {
         setMetrics(newMetrics);
       },
     );
-  }, [originalSrc]);
+  }, []);
 
   const applyInvertJS = useCallback(async () => {
     await ensureWasmInit();
     processImage(
-      originalSrc,
+      baseSrcRef.current,
       "JS Invert",
       (data) => invertJS(data),
       (newSrc, newMetrics) => {
@@ -276,12 +280,12 @@ export function useImageFilter(originalSrc: string) {
         setMetrics(newMetrics);
       },
     );
-  }, [originalSrc]);
+  }, []);
 
   const applyBlurWasm = useCallback(async () => {
     await ensureWasmInit();
     processImage(
-      originalSrc,
+      baseSrcRef.current,
       "WASM Blur",
       (data, w, h) => executeWasmFilter(data, w, h, "blur"),
       (newSrc, newMetrics) => {
@@ -289,12 +293,12 @@ export function useImageFilter(originalSrc: string) {
         setMetrics(newMetrics);
       },
     );
-  }, [originalSrc]);
+  }, []);
 
   const applyBlurJS = useCallback(async () => {
     await ensureWasmInit();
     processImage(
-      originalSrc,
+      baseSrcRef.current,
       "JS Blur",
       (data, w, h) => blurJS(data, w, h, BLUR_RADIUS),
       (newSrc, newMetrics) => {
@@ -302,12 +306,19 @@ export function useImageFilter(originalSrc: string) {
         setMetrics(newMetrics);
       },
     );
-  }, [originalSrc]);
+  }, []);
 
   const resetFilter = useCallback(() => {
-    setCurrentSrc(originalSrc);
+    setCurrentSrc(baseSrcRef.current);
     setMetrics(null);
-  }, [originalSrc]);
+  }, []);
+
+  const uploadImage = useCallback((file: File) => {
+    const url = URL.createObjectURL(file);
+    setBaseSrc(url);
+    setCurrentSrc(url);
+    setMetrics(null);
+  }, []);
 
   return {
     currentSrc,
@@ -322,5 +333,6 @@ export function useImageFilter(originalSrc: string) {
     applyBlurWasm,
     applyBlurJS,
     resetFilter,
+    uploadImage,
   };
 }

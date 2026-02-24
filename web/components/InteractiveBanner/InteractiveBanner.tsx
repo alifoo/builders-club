@@ -3,6 +3,7 @@ import DraggableElement from "./DraggableElement";
 import Navbar from "../Navbar";
 import { defaultElements } from "./defaultElements";
 import Toolbar from "./Toolbar";
+import ContextMenu from "./ContextMenu";
 import Typewriter from "typewriter-effect";
 import { useImageFilter } from "./useImageFilter";
 import clube from "../../assets/clube.jpg";
@@ -23,6 +24,7 @@ const InteractiveBanner = () => {
     id: string;
     width: number;
     type: string;
+    contextMenu?: boolean;
   } | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const {
@@ -38,6 +40,7 @@ const InteractiveBanner = () => {
     applyBlurWasm,
     applyBlurJS,
     resetFilter,
+    uploadImage,
   } = useImageFilter(clube);
 
   const containerMinHeight = useMemo(() => {
@@ -63,7 +66,14 @@ const InteractiveBanner = () => {
 
   const handleRightClick = (event: React.MouseEvent) => {
     event.preventDefault();
-    console.log("Right click detected!");
+    const imgEl = event.currentTarget as HTMLElement;
+    const imgRect = imgEl.getBoundingClientRect();
+    setSelected({
+      id: defaultElements[1],
+      width: imgRect.width,
+      type: "IMG",
+      contextMenu: true,
+    });
   };
 
   return (
@@ -145,7 +155,7 @@ const InteractiveBanner = () => {
       >
         <Navbar />
       </DraggableElement>
-      {selected && selected.type !== "COMPONENT" && (
+      {selected && !selected.contextMenu && selected.type !== "COMPONENT" && (
         <Toolbar
           xPercent={positions[selected.id].xPercent}
           yPx={positions[selected.id].yPx}
@@ -169,6 +179,18 @@ const InteractiveBanner = () => {
           filterTime={metrics.filterTime}
           totalTime={metrics.totalTime}
           onClose={() => setMetrics(null)}
+        />
+      )}
+      {selected?.contextMenu && (
+        <ContextMenu
+          xPercent={positions[selected.id].xPercent}
+          yPx={positions[selected.id].yPx}
+          width={selected.width}
+          onMouseDown={(e: React.MouseEvent) => e.stopPropagation()}
+          onUploadImage={(file) => {
+            uploadImage(file);
+            setSelected(null);
+          }}
         />
       )}
     </div>
