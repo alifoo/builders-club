@@ -1,73 +1,92 @@
-# React + TypeScript + Vite
+# Building Club
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Um playground interativo para experimentação com **React**, **Rust/WebAssembly** e manipulação de imagens em tempo real, com benchmarking lado a lado entre WASM e JavaScript puro.
 
-Currently, two official plugins are available:
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
+![Rust](https://img.shields.io/badge/Rust-WASM-DEA584?logo=rust&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-7-646CFF?logo=vite&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind-4-06B6D4?logo=tailwindcss&logoColor=white)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Funcionalidades
 
-## React Compiler
+- **Elementos arrastáveis** — todos os elementos da página (textos, imagens, componentes) podem ser arrastados livremente
+- **Filtros de imagem** — Grayscale, Sepia, Invert e Blur, com implementações em:
+  - **Rust/WASM** — manipulação direta na memória linear do WASM para máxima performance
+  - **JavaScript** — implementação equivalente em JS puro para comparação
+- **Benchmarking em tempo real** — popup exibindo o tempo de execução do filtro e o tempo total (incluindo I/O com canvas)
+- **Upload de imagens** — substitua a imagem padrão por qualquer imagem do seu dispositivo via menu de contexto (clique direito)
+- **Cursor customizado** — cursor animado com GSAP que segue o ponteiro com suavização
+- **Animação de texto** — efeito typewriter na mensagem de boas-vindas
+- **Toolbar contextual** — ao clicar em um elemento, uma toolbar aparece com ações específicas para o tipo do elemento (filtros para imagens, deletar para todos)
+- **Design responsivo** — layout adaptável para mobile, tablet e desktop
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+## Tech Stack
 
-## Expanding the ESLint configuration
+| Camada | Tecnologia |
+|--------|-----------|
+| **Frontend** | React 19, TypeScript |
+| **Build** | Vite 7 com SWC |
+| **Styling** | Tailwind CSS 4 |
+| **WASM** | Rust + `wasm-bindgen` + `wasm-pack` |
+| **Animações** | Framer Motion (`motion`), GSAP, `typewriter-effect` |
+| **Ícones** | `react-icons` |
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Como Rodar
 
-```js
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
+### Pré-requisitos
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- [Node.js](https://nodejs.org/) (v18+)
+- [Rust](https://www.rust-lang.org/tools/install)
+- [wasm-pack](https://rustwasm.github.io/wasm-pack/installer/)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+### Setup
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+1. **Clone o repositório**
+   ```bash
+   git clone https://github.com/seu-usuario/building-club.git
+   cd building-club
+   ```
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
+2. **Compile o WASM**
+   ```bash
+   wasm-pack build --target web
+   ```
 
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs["recommended-typescript"],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+3. **Instale as dependências**
+   ```bash
+   npm install
+   ```
+
+4. **Rode o dev server**
+   ```bash
+   npm run dev
+   ```
+
+5. Acesse [http://localhost:5173](http://localhost:5173)
+
+## Como Funciona o Benchmarking
+
+Ao clicar em uma imagem e selecionar um filtro, o sistema:
+
+1. Carrega os pixels da imagem via `Canvas API`
+2. Executa o filtro na implementação escolhida (WASM ou JS)
+3. Renderiza o resultado de volta no canvas
+4. Exibe um popup com:
+   - **Filter time** — tempo gasto exclusivamente no processamento do filtro
+   - **Total time** — tempo total incluindo I/O (decodificação, canvas, blob)
+
+A versão WASM utiliza **alocação direta na memória linear** (`alloc_buffer` / `free_buffer`) para evitar cópias desnecessárias entre JS e WASM, maximizando a performance.
+
+## Filtros Disponíveis
+
+| Filtro | Descrição |
+|--------|-----------|
+| **Grayscale** | Conversão para tons de cinza usando a fórmula ITU-R BT.601 |
+| **Sepia** | Efeito sépia clássico com matriz de transformação de cor |
+| **Invert** | Inversão dos canais RGB (negativo) |
+| **Blur** | Desfoque por média de vizinhança (box blur) com raio configurável |
+
+
+## Licenças
+
+Dual-licensed sob [MIT](./LICENSE_MIT) e [Apache 2.0](./LICENSE_APACHE).
