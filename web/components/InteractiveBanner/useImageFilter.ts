@@ -18,6 +18,7 @@ function ensureWasmInit(): Promise<void> {
       wasmInstance = instance;
     });
   }
+  return wasmReady;
 }
 
 const BLUR_RADIUS = 8;
@@ -137,7 +138,7 @@ function processImage(
   originalSrc: string,
   label: string,
   filterFn: FilterFn,
-  onDone: (src: string) => void,
+  onDone: (src: string, metrics: { label: string, filterTime: number, totalTime: number }) => void,
 ) {
   const img = new Image();
   img.crossOrigin = "anonymous";
@@ -174,11 +175,12 @@ function processImage(
     canvas.toBlob(
       (blob) => {
         const totalElapsed = performance.now() - totalStart;
-        console.log(
-          `[${label}] ${canvas.width}x${canvas.height} (${pixels.length} bytes) — filter: ${filterElapsed.toFixed(2)}ms, total: ${totalElapsed.toFixed(2)}ms`,
-        );
         // onDone é o callback que vai atualizar o src da imagem no React, usando o URL criado a partir do blob do canvas
-        onDone(URL.createObjectURL(blob!));
+        onDone(URL.createObjectURL(blob!), {
+          label,
+          filterTime: filterElapsed,
+          totalTime: totalElapsed,
+        });
       },
       "image/jpeg",
       0.92,
@@ -189,6 +191,7 @@ function processImage(
 
 export function useImageFilter(originalSrc: string) {
   const [currentSrc, setCurrentSrc] = useState(originalSrc);
+  const [metrics, setMetrics] = useState<{ label: string, filterTime: number, totalTime: number } | null>(null);
 
   const applyGrayscaleWasm = useCallback(async () => {
     await ensureWasmInit();
@@ -196,7 +199,10 @@ export function useImageFilter(originalSrc: string) {
       originalSrc,
       "WASM Grayscale",
       (data, w, h) => executeWasmFilter(data, w, h, "grayscale"),
-      setCurrentSrc,
+      (newSrc, newMetrics) => {
+        setCurrentSrc(newSrc);
+        setMetrics(newMetrics);
+      },
     );
   }, [originalSrc]);
 
@@ -206,7 +212,10 @@ export function useImageFilter(originalSrc: string) {
       originalSrc,
       "JS Grayscale",
       (data) => grayscaleJS(data),
-      setCurrentSrc,
+      (newSrc, newMetrics) => {
+        setCurrentSrc(newSrc);
+        setMetrics(newMetrics);
+      },
     );
   }, [originalSrc]);
 
@@ -216,7 +225,10 @@ export function useImageFilter(originalSrc: string) {
       originalSrc,
       "WASM Sepia",
       (data, w, h) => executeWasmFilter(data, w, h, "sepia"),
-      setCurrentSrc,
+      (newSrc, newMetrics) => {
+        setCurrentSrc(newSrc);
+        setMetrics(newMetrics);
+      },
     );
   }, [originalSrc]);
 
@@ -226,7 +238,10 @@ export function useImageFilter(originalSrc: string) {
       originalSrc,
       "JS Sepia",
       (data) => sepiaJS(data),
-      setCurrentSrc,
+      (newSrc, newMetrics) => {
+        setCurrentSrc(newSrc);
+        setMetrics(newMetrics);
+      },
     );
   }, [originalSrc]);
 
@@ -236,7 +251,10 @@ export function useImageFilter(originalSrc: string) {
       originalSrc,
       "WASM Invert",
       (data, w, h) => executeWasmFilter(data, w, h, "invert"),
-      setCurrentSrc,
+      (newSrc, newMetrics) => {
+        setCurrentSrc(newSrc);
+        setMetrics(newMetrics);
+      },
     );
   }, [originalSrc]);
 
@@ -246,7 +264,10 @@ export function useImageFilter(originalSrc: string) {
       originalSrc,
       "JS Invert",
       (data) => invertJS(data),
-      setCurrentSrc,
+      (newSrc, newMetrics) => {
+        setCurrentSrc(newSrc);
+        setMetrics(newMetrics);
+      },
     );
   }, [originalSrc]);
 
@@ -256,7 +277,10 @@ export function useImageFilter(originalSrc: string) {
       originalSrc,
       "WASM Blur",
       (data, w, h) => executeWasmFilter(data, w, h, "blur"),
-      setCurrentSrc,
+      (newSrc, newMetrics) => {
+        setCurrentSrc(newSrc);
+        setMetrics(newMetrics);
+      },
     );
   }, [originalSrc]);
 
@@ -266,16 +290,22 @@ export function useImageFilter(originalSrc: string) {
       originalSrc,
       "JS Blur",
       (data, w, h) => blurJS(data, w, h, BLUR_RADIUS),
-      setCurrentSrc,
+      (newSrc, newMetrics) => {
+        setCurrentSrc(newSrc);
+        setMetrics(newMetrics);
+      },
     );
   }, [originalSrc]);
 
   const resetFilter = useCallback(() => {
     setCurrentSrc(originalSrc);
+    setMetrics(null);
   }, [originalSrc]);
 
   return {
     currentSrc,
+    metrics,
+    setMetrics,
     applyGrayscaleWasm,
     applyGrayscaleJS,
     applySepiaWasm,

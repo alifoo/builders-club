@@ -6,6 +6,7 @@ import Toolbar from "./Toolbar";
 import Typewriter from "typewriter-effect";
 import { useImageFilter } from "./useImageFilter";
 import clube from "../../assets/clube.jpg";
+import BenchmarkPopup from "./BenchmarkPopup";
 
 const CONTAINER_PADDING = 500;
 
@@ -20,7 +21,7 @@ const InteractiveBanner = () => {
   });
   const [selected, setSelected] = useState<{ id: string; width: number, type: string } | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const { currentSrc, applyGrayscaleWasm, applyGrayscaleJS, applySepiaWasm, applySepiaJS, applyInvertWasm, applyInvertJS, applyBlurWasm, applyBlurJS, resetFilter } = useImageFilter(clube);
+  const { currentSrc, metrics, setMetrics, applyGrayscaleWasm, applyGrayscaleJS, applySepiaWasm, applySepiaJS, applyInvertWasm, applyInvertJS, applyBlurWasm, applyBlurJS, resetFilter } = useImageFilter(clube);
 
   const containerMinHeight = useMemo(() => {
     if (!positions) return undefined;
@@ -42,6 +43,11 @@ const InteractiveBanner = () => {
   function handleMouseDown() {
     setSelected(null);
   }
+
+  const handleRightClick = (event: React.MouseEvent) => {
+    event.preventDefault();
+    console.log('Right click detected!');
+  };
 
   return (
     <div
@@ -101,6 +107,7 @@ const InteractiveBanner = () => {
           src={currentSrc}
           alt="8k image"
           className="w-64 sm:w-72 md:w-96 lg:w-150 rounded-md shadow-md"
+          onContextMenu={handleRightClick}
         />
       </DraggableElement>
       <DraggableElement
@@ -115,7 +122,7 @@ const InteractiveBanner = () => {
       >
         <Navbar />
       </DraggableElement>
-      {selected && (
+      {selected && selected.type !== "COMPONENT" && (
         <Toolbar
           xPercent={positions[selected.id].xPercent}
           yPx={positions[selected.id].yPx}
@@ -131,6 +138,14 @@ const InteractiveBanner = () => {
           onBlurWasm={applyBlurWasm}
           onBlurJS={applyBlurJS}
           onReset={resetFilter}
+        />
+      )}
+      {metrics && (
+        <BenchmarkPopup
+          label={metrics.label}
+          filterTime={metrics.filterTime}
+          totalTime={metrics.totalTime}
+          onClose={() => setMetrics(null)}
         />
       )}
     </div>
