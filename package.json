@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "format": "prettier --write ."
+    "build": "npm run build:wasm && tsc -b && vite build",
+    "build:wasm": "curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh && wasm-pack build --target web",
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.0",
