@@ -43,8 +43,8 @@ Um playground interativo para experimentação com **React**, **Rust/WebAssembly
 
 1. **Clone o repositório**
    ```bash
-   git clone https://github.com/seu-usuario/building-club.git
-   cd building-club
+   git clone https://github.com/seu-usuario/builders-club.git
+   cd builders-club
    ```
 
 2. **Compile o WASM**

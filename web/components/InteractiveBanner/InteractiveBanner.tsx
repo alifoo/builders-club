@@ -115,7 +115,7 @@ const InteractiveBanner = () => {
             <Typewriter
               onInit={(typewriter) => {
                 typewriter
-                  .typeString("bem-vindo(a) ao <strong>Building Club</strong>")
+                  .typeString("bem-vindo(a) ao <strong>Builders Club</strong>")
                   .start();
               }}
               options={{
