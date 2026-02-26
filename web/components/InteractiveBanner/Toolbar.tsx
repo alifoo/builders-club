@@ -7,6 +7,7 @@ interface ToolbarProps {
   width: number;
   type: string;
   onMouseDown: (e: React.MouseEvent) => void;
+  onTouchStart?: (e: React.TouchEvent) => void;
   onGrayscaleWasm: () => void;
   onGrayscaleJS: () => void;
   onSepiaWasm: () => void;
@@ -25,6 +26,7 @@ const Toolbar = ({
   width,
   type,
   onMouseDown,
+  onTouchStart,
   onGrayscaleWasm,
   onGrayscaleJS,
   onSepiaWasm,
@@ -48,6 +50,7 @@ const Toolbar = ({
         transform: `translateX(calc(${width}px / 2 + 15px))`,
       }}
       onMouseDown={onMouseDown}
+      onTouchStart={onTouchStart}
     >
       <motion.div
         initial={{ opacity: 0, scale: 0 }}

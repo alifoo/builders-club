@@ -1,4 +1,4 @@
-# Building Club
+# Clube de Builders - builders-club
 
 Um playground interativo para experimentação com **React**, **Rust/WebAssembly** e manipulação de imagens em tempo real, com benchmarking lado a lado entre WASM e JavaScript puro.
 

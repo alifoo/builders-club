@@ -65,6 +65,10 @@ const InteractiveBanner = () => {
     setSelected(null);
   }
 
+  function handleTouchStart() {
+    setSelected(null);
+  }
+
   function handleDelete() {
     if (selected) {
       setHiddenElements((prev) => new Set(prev).add(selected.id));
@@ -89,6 +93,7 @@ const InteractiveBanner = () => {
       ref={containerRef}
       className="relative min-h-screen w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size-[16px_16px]"
       onMouseDown={handleMouseDown}
+      onTouchStart={handleTouchStart}
       style={
         containerMinHeight
           ? { minHeight: `${containerMinHeight}px` }
@@ -178,6 +183,7 @@ const InteractiveBanner = () => {
           width={selected.width}
           type={selected.type}
           onMouseDown={(e: React.MouseEvent) => e.stopPropagation()}
+          onTouchStart={(e: React.TouchEvent) => e.stopPropagation()}
           onGrayscaleWasm={applyGrayscaleWasm}
           onGrayscaleJS={applyGrayscaleJS}
           onSepiaWasm={applySepiaWasm}
@@ -204,6 +210,7 @@ const InteractiveBanner = () => {
           yPx={positions[selected.id].yPx}
           width={selected.width}
           onMouseDown={(e: React.MouseEvent) => e.stopPropagation()}
+          onTouchStart={(e: React.TouchEvent) => e.stopPropagation()}
           onUploadImage={(file) => {
             uploadImage(file);
             setSelected(null);
