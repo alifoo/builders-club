@@ -4,7 +4,7 @@ import { LuCircleHelp } from "react-icons/lu";
 
 const Navbar = () => {
   const [showTooltip, setShowTooltip] = useState(false);
-  const bc = "> building_club";
+  const bc = "> builders_club";
 
   return (
     <div className="flex w-70 xs:w-96 sm:w-120 md:w-120 lg:w-170 gap-2 px-3 sm:px-4 p-2 border-gray-200 border-1 rounded-sm bg-white items-center mx-auto border-2">

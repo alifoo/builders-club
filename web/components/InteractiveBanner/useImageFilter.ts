@@ -7,7 +7,7 @@ import init, {
   alloc_buffer,
   free_buffer,
   type InitOutput,
-} from "../../../pkg/building_club";
+} from "../../../pkg/builders_club";
 
 let wasmInstance: InitOutput | null = null;
 let wasmReady: Promise<void> | null = null;

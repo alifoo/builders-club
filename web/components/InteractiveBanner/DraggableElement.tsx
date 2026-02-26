@@ -69,6 +69,49 @@ const DraggableElement = ({
     window.removeEventListener("mouseup", handleMouseUp);
   }
 
+  function handleTouchStart(e: React.TouchEvent<HTMLDivElement>) {
+    e.stopPropagation();
+
+    const touch = e.touches[0];
+    const elRect = e.currentTarget.getBoundingClientRect();
+    onSelect?.(id, elRect.width, type);
+
+    dragOffset.current = {
+      x: touch.clientX - elRect.left,
+      y: touch.clientY - elRect.top,
+    };
+    elementSize.current = {
+      width: elRect.width,
+      height: elRect.height,
+    };
+
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("touchend", handleTouchEnd);
+  }
+
+  function handleTouchMove(e: TouchEvent) {
+    e.preventDefault();
+    const container = containerRef.current;
+    if (!container) return;
+
+    const touch = e.touches[0];
+    const rect = container.getBoundingClientRect();
+    const newPixelLeft = touch.clientX - dragOffset.current.x;
+    const newPixelTop = touch.clientY - dragOffset.current.y;
+
+    const newX =
+      ((newPixelLeft - rect.left + elementSize.current.width / 2) /
+        rect.width) *
+      100;
+    const newY = newPixelTop - rect.top;
+    onMove(id, newX, newY);
+  }
+
+  function handleTouchEnd() {
+    window.removeEventListener("touchmove", handleTouchMove);
+    window.removeEventListener("touchend", handleTouchEnd);
+  }
+
   return (
     <motion.div
       className="absolute cursor-grab w-max h-max"
@@ -76,6 +119,7 @@ const DraggableElement = ({
         left: `${xPercent}%`,
         top: `${yPx}px`,
         transform: "translateX(-50%)",
+        touchAction: "none",
       }}
       animate={
         isSelected
@@ -84,6 +128,7 @@ const DraggableElement = ({
       }
       transition={{ duration: 0.1, ease: "easeInOut" }}
       onMouseDown={handleMouseDown}
+      onTouchStart={handleTouchStart}
     >
       {children}
     </motion.div>

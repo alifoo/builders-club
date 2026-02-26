@@ -1,17 +1,17 @@
 {
-  "name": "building-club",
+  "name": "builders-club",
   "type": "module",
   "collaborators": [
     "alifoo <alissonayres.trb@gmail.com>"
   ],
   "version": "0.1.0",
   "files": [
-    "building_club_bg.wasm",
-    "building_club.js",
-    "building_club.d.ts"
+    "builders_club_bg.wasm",
+    "builders_club.js",
+    "builders_club.d.ts"
   ],
-  "main": "building_club.js",
-  "types": "building_club.d.ts",
+  "main": "builders_club.js",
+  "types": "builders_club.d.ts",
   "sideEffects": [
     "./snippets/*"
   ]
