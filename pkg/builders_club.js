@@ -1,4 +1,4 @@
-/* @ts-self-types="./building_club.d.ts" */
+/* @ts-self-types="./builders_club.d.ts" */
 
 /**
  * @param {number} size
@@ -91,7 +91,7 @@ function __wbg_get_imports() {
     };
     return {
         __proto__: null,
-        "./building_club_bg.js": import0,
+        "./builders_club_bg.js": import0,
     };
 }
 
@@ -194,7 +194,7 @@ async function __wbg_init(module_or_path) {
     }
 
     if (module_or_path === undefined) {
-        module_or_path = new URL('building_club_bg.wasm', import.meta.url);
+        module_or_path = new URL('builders_club_bg.wasm', import.meta.url);
     }
     const imports = __wbg_get_imports();
 
