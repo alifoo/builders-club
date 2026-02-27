@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import DraggableElement from "./DraggableElement";
 import Navbar from "../Navbar";
 import { defaultElements } from "./defaultElements";
@@ -8,6 +8,7 @@ import Typewriter from "typewriter-effect";
 import { useImageFilter } from "./useImageFilter";
 import clube from "../../assets/clube.jpg";
 import BenchmarkPopup from "./BenchmarkPopup";
+import { motion } from "motion/react";
 
 const CONTAINER_PADDING = 500;
 
@@ -16,9 +17,11 @@ const InteractiveBanner = () => {
     Record<string, { xPercent: number; yPx: number }>
   >({
     [defaultElements[0]]: { xPercent: 50, yPx: 120 },
-    [defaultElements[1]]: { xPercent: 50, yPx: 370 },
+    [defaultElements[1]]: { xPercent: 50, yPx: 360 },
     [defaultElements[2]]: { xPercent: 50, yPx: 270 },
     [defaultElements[3]]: { xPercent: 50, yPx: 24 },
+    [defaultElements[4]]: { xPercent: 50, yPx: 700 },
+    [defaultElements[5]]: { xPercent: 50, yPx: 970 },
   });
   const [selected, setSelected] = useState<{
     id: string;
@@ -27,6 +30,7 @@ const InteractiveBanner = () => {
     contextMenu?: boolean;
   } | null>(null);
   const [hiddenElements, setHiddenElements] = useState<Set<string>>(new Set());
+  const [isSmall, setIsSmall] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const {
     currentSrc,
@@ -43,6 +47,14 @@ const InteractiveBanner = () => {
     resetFilter,
     uploadImage,
   } = useImageFilter(clube);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 640px)");
+    const handler = (e: MediaQueryListEvent) => setIsSmall(e.matches);
+    setIsSmall(mq.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
 
   const containerMinHeight = useMemo(() => {
     if (!positions) return undefined;
@@ -130,7 +142,7 @@ const InteractiveBanner = () => {
         <DraggableElement
           id={defaultElements[2]}
           xPercent={positions[defaultElements[2]].xPercent}
-          yPx={positions[defaultElements[2]].yPx}
+          yPx={positions[defaultElements[2]].yPx - (isSmall ? 30 : 0)}
           onMove={handleMove}
           containerRef={containerRef}
           isSelected={selected?.id === defaultElements[2]}
@@ -138,8 +150,7 @@ const InteractiveBanner = () => {
           type="TEXT"
         >
           <p className="font-space-mono text-sm sm:text-base w-48 sm:w-64 md:w-96 lg:w-150 h-fit text-center">
-            tudo nesta página é arrastável e editável. clique em algum elemento
-            para testar!
+            o clube da pucpr sobre programação, design e produto.
           </p>
         </DraggableElement>
       )}
@@ -147,7 +158,7 @@ const InteractiveBanner = () => {
         <DraggableElement
           id={defaultElements[1]}
           xPercent={positions[defaultElements[1]].xPercent}
-          yPx={positions[defaultElements[1]].yPx}
+          yPx={positions[defaultElements[1]].yPx - (isSmall ? 20 : 0)}
           onMove={handleMove}
           containerRef={containerRef}
           isSelected={selected?.id === defaultElements[1]}
@@ -162,6 +173,50 @@ const InteractiveBanner = () => {
           />
         </DraggableElement>
       )}
+      {!hiddenElements.has(defaultElements[4]) && (
+        <DraggableElement
+          id={defaultElements[4]}
+          xPercent={positions[defaultElements[4]].xPercent}
+          yPx={positions[defaultElements[4]].yPx - (isSmall ? 180 : 0)}
+          onMove={handleMove}
+          containerRef={containerRef}
+          isSelected={selected?.id === defaultElements[4]}
+          onSelect={handleSelect}
+          type="TEXT"
+        >
+          <p className="font-space-mono text-sm sm:text-base w-48 sm:w-64 md:w-96 lg:w-150 h-fit text-center">
+            temos encontros semanais onde falamos sobre programação (com foco em web dev), produto (com foco em startups), design e muito mais.
+          </p>
+          <br />
+          <p className="font-space-mono text-sm sm:text-base w-48 sm:w-64 md:w-96 lg:w-150 h-fit text-center">
+            além disso, realizamos workshops, hackathons e projetos open-source para colocar a mão na massa e aprender fazendo.
+          </p>
+          <br />
+          <p className="font-space-mono text-sm sm:text-base w-48 sm:w-64 md:w-96 lg:w-150 h-fit text-center">
+            seja você iniciante ou avançado, tem um lugar para você no nosso clube. junte-se a nós e faça parte dessa comunidade de builders da pucpr! 🔨
+          </p>
+        </DraggableElement>)}
+      {!hiddenElements.has(defaultElements[5]) && (
+        <DraggableElement
+          id={defaultElements[5]}
+          xPercent={positions[defaultElements[5]].xPercent}
+          yPx={positions[defaultElements[5]].yPx + (isSmall ? 30 : 0)}
+          onMove={handleMove}
+          containerRef={containerRef}
+          isSelected={selected?.id === defaultElements[5]}
+          onSelect={handleSelect}
+          type="TEXT"
+        >
+          <a href="https://wa.me/5541992488366?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20gostaria%20de%20saber%20mais%20sobre%20o%20Builders%20Club%20da%20PUCPR!%0A%0AMeu%20nome%20%C3%A9%3A%20">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="font-space-mono text-sm sm:text-base w-fit h-fit text-center bg-blue-600 text-white px-4 py-2 rounded-md shadow-md cursor-pointer"
+            >
+              entrar no clube
+            </motion.button>
+          </a>
+        </DraggableElement>)}
       {!hiddenElements.has(defaultElements[3]) && (
         <DraggableElement
           id={defaultElements[3]}
@@ -185,25 +240,25 @@ const InteractiveBanner = () => {
           onMouseDown={(e: React.MouseEvent) => e.stopPropagation()}
           onTouchStart={(e: React.TouchEvent) => e.stopPropagation()}
           onGrayscaleWasm={applyGrayscaleWasm}
-          onGrayscaleJS={applyGrayscaleJS}
+          // onGrayscaleJS={applyGrayscaleJS}
           onSepiaWasm={applySepiaWasm}
-          onSepiaJS={applySepiaJS}
+          // onSepiaJS={applySepiaJS}
           onInvertWasm={applyInvertWasm}
-          onInvertJS={applyInvertJS}
+          // onInvertJS={applyInvertJS}
           onBlurWasm={applyBlurWasm}
-          onBlurJS={applyBlurJS}
+          // onBlurJS={applyBlurJS}
           onReset={resetFilter}
           onDelete={handleDelete}
         />
       )}
-      {metrics && (
-        <BenchmarkPopup
-          label={metrics.label}
-          filterTime={metrics.filterTime}
-          totalTime={metrics.totalTime}
-          onClose={() => setMetrics(null)}
-        />
-      )}
+      {/* {metrics && ( */}
+      {/*   <BenchmarkPopup */}
+      {/*     label={metrics.label} */}
+      {/*     filterTime={metrics.filterTime} */}
+      {/*     totalTime={metrics.totalTime} */}
+      {/*     onClose={() => setMetrics(null)} */}
+      {/*   /> */}
+      {/* )} */}
       {selected?.contextMenu && (
         <ContextMenu
           xPercent={positions[selected.id].xPercent}

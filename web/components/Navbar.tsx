@@ -41,10 +41,13 @@ const Navbar = () => {
               <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-3 min-w-48 font-space-mono text-[10px] text-gray-600 leading-relaxed">
                 <p className="font-bold text-gray-800 mb-1">o que é isso?</p>
                 <p>
-                  um playground para experimentar com React e WASM.
+                  esse site é um playground interativo para o builders club da pucpr
                   <br />
                   <br />
-                  clique em uma imagem com o botão esquerdo para ver os filtros, e com o botão direito para ver mais opções.
+                  clique com o botão esquerdo em qualquer elemento para ver as opções
+                  <br />
+                  <br />
+                  e clique com o botão direito em uma imagem para fazer upload da sua própria
                 </p>
               </div>
             </motion.div>

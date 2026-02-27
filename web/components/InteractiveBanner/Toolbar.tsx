@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
-import { SiWebassembly, SiJavascript } from "react-icons/si";
+// import { SiWebassembly, SiJavascript } from "react-icons/si";
+import { SiWebassembly } from "react-icons/si";
 
 interface ToolbarProps {
   xPercent: number;
@@ -9,13 +10,13 @@ interface ToolbarProps {
   onMouseDown: (e: React.MouseEvent) => void;
   onTouchStart?: (e: React.TouchEvent) => void;
   onGrayscaleWasm: () => void;
-  onGrayscaleJS: () => void;
+  // onGrayscaleJS: () => void;
   onSepiaWasm: () => void;
-  onSepiaJS: () => void;
+  // onSepiaJS: () => void;
   onInvertWasm: () => void;
-  onInvertJS: () => void;
+  // onInvertJS: () => void;
   onBlurWasm: () => void;
-  onBlurJS: () => void;
+  // onBlurJS: () => void;
   onReset: () => void;
   onDelete?: () => void;
 }
@@ -28,13 +29,13 @@ const Toolbar = ({
   onMouseDown,
   onTouchStart,
   onGrayscaleWasm,
-  onGrayscaleJS,
+  // onGrayscaleJS,
   onSepiaWasm,
-  onSepiaJS,
+  // onSepiaJS,
   onInvertWasm,
-  onInvertJS,
+  // onInvertJS,
   onBlurWasm,
-  onBlurJS,
+  // onBlurJS,
   onReset,
   onDelete,
 }: ToolbarProps) => {
@@ -64,10 +65,10 @@ const Toolbar = ({
                 Grayscale{" "}
                 <SiWebassembly className="inline text-indigo-600 ml-1" />
               </button>
-              <button className={buttonClass} onClick={onGrayscaleJS}>
+              {/* <button className={buttonClass} onClick={onGrayscaleJS}>
                 Grayscale{" "}
                 <SiJavascript className="inline text-yellow-400 ml-1" />
-              </button>
+              </button> */}
             </div>
 
             <hr className="border-gray-100" />
@@ -76,9 +77,9 @@ const Toolbar = ({
               <button className={buttonClass} onClick={onSepiaWasm}>
                 Sepia <SiWebassembly className="inline text-indigo-600 ml-1" />
               </button>
-              <button className={buttonClass} onClick={onSepiaJS}>
+              {/* <button className={buttonClass} onClick={onSepiaJS}>
                 Sepia <SiJavascript className="inline text-yellow-400 ml-1" />
-              </button>
+              </button> */}
             </div>
 
             <hr className="border-gray-100" />
@@ -87,9 +88,9 @@ const Toolbar = ({
               <button className={buttonClass} onClick={onInvertWasm}>
                 Invert <SiWebassembly className="inline text-indigo-600 ml-1" />
               </button>
-              <button className={buttonClass} onClick={onInvertJS}>
+              {/* <button className={buttonClass} onClick={onInvertJS}>
                 Invert <SiJavascript className="inline text-yellow-400 ml-1" />
-              </button>
+              </button> */}
             </div>
 
             <hr className="border-gray-100" />
@@ -98,9 +99,9 @@ const Toolbar = ({
               <button className={buttonClass} onClick={onBlurWasm}>
                 Blur <SiWebassembly className="inline text-indigo-600 ml-1" />
               </button>
-              <button className={buttonClass} onClick={onBlurJS}>
+              {/* <button className={buttonClass} onClick={onBlurJS}>
                 Blur <SiJavascript className="inline text-yellow-400 ml-1" />
-              </button>
+              </button> */}
             </div>
 
             <hr className="border-gray-100" />
