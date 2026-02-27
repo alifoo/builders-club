@@ -7,6 +7,13 @@ Um playground interativo para experimentação com **React**, **Rust/WebAssembly
 ![Vite](https://img.shields.io/badge/Vite-7-646CFF?logo=vite&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/Tailwind-4-06B6D4?logo=tailwindcss&logoColor=white)
 
+## Branches
+
+| Branch | Descrição |
+|--------|-----------|
+| `main` | Versão pública, voltada para o público geral |
+| `live-demo` | Versão utilizada na apresentação ao vivo na ReactCWB sobre WASM + React |
+
 ## Funcionalidades
 
 - **Elementos arrastáveis** — todos os elementos da página (textos, imagens, componentes) podem ser arrastados livremente
@@ -85,6 +92,7 @@ A versão WASM utiliza **alocação direta na memória linear** (`alloc_buffer` 
 | **Sepia** | Efeito sépia clássico com matriz de transformação de cor |
 | **Invert** | Inversão dos canais RGB (negativo) |
 | **Blur** | Desfoque por média de vizinhança (box blur) com raio configurável |
+
 
 
 ## Licenças
