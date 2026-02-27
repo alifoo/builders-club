@@ -8,7 +8,10 @@ const Navbar = () => {
 
   return (
     <div className="flex w-70 xs:w-96 sm:w-120 md:w-120 lg:w-170 gap-2 px-3 sm:px-4 p-2 border-gray-200 border-1 rounded-sm bg-white items-center mx-auto border-2">
-      <a href="#" className="flex-1 font-space-mono text-xs [word-spacing:-0.3em]">
+      <a
+        href="#"
+        className="flex-1 font-space-mono text-xs [word-spacing:-0.3em]"
+      >
         <motion.div
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -41,13 +44,15 @@ const Navbar = () => {
               <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-3 min-w-48 font-space-mono text-[10px] text-gray-600 leading-relaxed">
                 <p className="font-bold text-gray-800 mb-1">o que é isso?</p>
                 <p>
-                  esse site é um playground interativo para o builders club da pucpr
+                  esse site é um playground interativo para o builders club da
+                  pucpr
                   <br />
                   <br />
-                  clique com o botão esquerdo em qualquer elemento para ver as opções
+                  clique com o botão esquerdo em qualquer elemento para ver as
+                  opções
                   <br />
-                  <br />
-                  e clique com o botão direito em uma imagem para fazer upload da sua própria
+                  <br />e clique com o botão direito em uma imagem para fazer
+                  upload da sua própria
                 </p>
               </div>
             </motion.div>

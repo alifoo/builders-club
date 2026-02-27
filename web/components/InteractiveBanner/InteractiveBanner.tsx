@@ -185,17 +185,22 @@ const InteractiveBanner = () => {
           type="TEXT"
         >
           <p className="font-space-mono text-sm sm:text-base w-48 sm:w-64 md:w-96 lg:w-150 h-fit text-center">
-            temos encontros semanais onde falamos sobre programação (com foco em web dev), produto (com foco em startups), design e muito mais.
+            temos encontros semanais onde falamos sobre programação (com foco em
+            web dev), produto (com foco em startups), design e muito mais.
           </p>
           <br />
           <p className="font-space-mono text-sm sm:text-base w-48 sm:w-64 md:w-96 lg:w-150 h-fit text-center">
-            além disso, realizamos workshops, hackathons e projetos open-source para colocar a mão na massa e aprender fazendo.
+            além disso, realizamos workshops, hackathons e projetos open-source
+            para colocar a mão na massa e aprender fazendo.
           </p>
           <br />
           <p className="font-space-mono text-sm sm:text-base w-48 sm:w-64 md:w-96 lg:w-150 h-fit text-center">
-            seja você iniciante ou avançado, tem um lugar para você no nosso clube. junte-se a nós e faça parte dessa comunidade de builders da pucpr! 🔨
+            seja você iniciante ou avançado, tem um lugar para você no nosso
+            clube. junte-se a nós e faça parte dessa comunidade de builders da
+            pucpr! 🔨
           </p>
-        </DraggableElement>)}
+        </DraggableElement>
+      )}
       {!hiddenElements.has(defaultElements[5]) && (
         <DraggableElement
           id={defaultElements[5]}
@@ -216,7 +221,8 @@ const InteractiveBanner = () => {
               entrar no clube
             </motion.button>
           </a>
-        </DraggableElement>)}
+        </DraggableElement>
+      )}
       {!hiddenElements.has(defaultElements[3]) && (
         <DraggableElement
           id={defaultElements[3]}

@@ -1,6 +1,6 @@
 # Clube de Builders - builders-club
 
-Um playground interativo para experimentação com **React**, **Rust/WebAssembly** e manipulação de imagens em tempo real, com benchmarking lado a lado entre WASM e JavaScript puro.
+Site oficial do Clube de Builders da PUCPR. O site é um playground interativo para experimentação com **React**, **Rust/WebAssembly** e manipulação de imagens em tempo real, com benchmarking lado a lado entre WASM e JavaScript puro. Contudo, na branch de produção, as features de comparação de performance estão desativadas e somente as funções WASM são utilizadas.
 
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
 ![Rust](https://img.shields.io/badge/Rust-WASM-DEA584?logo=rust&logoColor=white)
@@ -9,9 +9,9 @@ Um playground interativo para experimentação com **React**, **Rust/WebAssembly
 
 ## Branches
 
-| Branch | Descrição |
-|--------|-----------|
-| `main` | Versão pública, voltada para o público geral |
+| Branch      | Descrição                                                               |
+| ----------- | ----------------------------------------------------------------------- |
+| `main`      | Versão pública, voltada para o público geral                            |
 | `live-demo` | Versão utilizada na apresentação ao vivo na ReactCWB sobre WASM + React |
 
 ## Funcionalidades
@@ -29,14 +29,14 @@ Um playground interativo para experimentação com **React**, **Rust/WebAssembly
 
 ## Tech Stack
 
-| Camada | Tecnologia |
-|--------|-----------|
-| **Frontend** | React 19, TypeScript |
-| **Build** | Vite 7 com SWC |
-| **Styling** | Tailwind CSS 4 |
-| **WASM** | Rust + `wasm-bindgen` + `wasm-pack` |
+| Camada        | Tecnologia                                          |
+| ------------- | --------------------------------------------------- |
+| **Frontend**  | React 19, TypeScript                                |
+| **Build**     | Vite 7 com SWC                                      |
+| **Styling**   | Tailwind CSS 4                                      |
+| **WASM**      | Rust + `wasm-bindgen` + `wasm-pack`                 |
 | **Animações** | Framer Motion (`motion`), GSAP, `typewriter-effect` |
-| **Ícones** | `react-icons` |
+| **Ícones**    | `react-icons`                                       |
 
 ## Como Rodar
 
@@ -49,22 +49,26 @@ Um playground interativo para experimentação com **React**, **Rust/WebAssembly
 ### Setup
 
 1. **Clone o repositório**
+
    ```bash
    git clone https://github.com/seu-usuario/builders-club.git
    cd builders-club
    ```
 
 2. **Compile o WASM**
+
    ```bash
    wasm-pack build --target web
    ```
 
 3. **Instale as dependências**
+
    ```bash
    npm install
    ```
 
 4. **Rode o dev server**
+
    ```bash
    npm run dev
    ```
@@ -86,14 +90,12 @@ A versão WASM utiliza **alocação direta na memória linear** (`alloc_buffer` 
 
 ## Filtros Disponíveis
 
-| Filtro | Descrição |
-|--------|-----------|
-| **Grayscale** | Conversão para tons de cinza usando a fórmula ITU-R BT.601 |
-| **Sepia** | Efeito sépia clássico com matriz de transformação de cor |
-| **Invert** | Inversão dos canais RGB (negativo) |
-| **Blur** | Desfoque por média de vizinhança (box blur) com raio configurável |
-
-
+| Filtro        | Descrição                                                         |
+| ------------- | ----------------------------------------------------------------- |
+| **Grayscale** | Conversão para tons de cinza usando a fórmula ITU-R BT.601        |
+| **Sepia**     | Efeito sépia clássico com matriz de transformação de cor          |
+| **Invert**    | Inversão dos canais RGB (negativo)                                |
+| **Blur**      | Desfoque por média de vizinhança (box blur) com raio configurável |
 
 ## Licenças
 

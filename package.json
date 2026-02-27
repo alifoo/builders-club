@@ -8,7 +8,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "build": "npm run build:wasm && tsc -b && vite build",
-    "build:wasm": "bash build-wasm.sh"
+    "build:wasm": "bash build-wasm.sh",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.0",
